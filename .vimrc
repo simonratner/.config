@@ -30,6 +30,7 @@ set cinoptions=l1,g0.5s,h0.5s,i2s,+2s,(0,W2s
 
 set norestorescreen     " don't mess with my terminal unless I tell you to!
 set noerrorbells
+set nowrap
 set nohidden            " close the buffer when I close a tab
 set noautowrite         " don't automagically write on :next
 set lazyredraw          " don't redraw when don't have to
@@ -59,29 +60,30 @@ filetype on                   " enable filetype detection
 filetype indent on            " enable filetype-specific indenting
 filetype plugin on            " enable filetype-specific plugins
 
-" Make it so that tabs and trailing spaces are always visible:
-" (Relys on syntax highlighting to turn them yellow.)
+" Make it so that tabs and trailing spaces are always visible.
 set list
-set listchars=tab:¬\ ,trail:\ ,extends:»,precedes:«
+set listchars=tab:»\ ,trail:·,extends:»,precedes:«
 
 set background=dark
 
 if !has("gui_running")
   " So we can see tabs and trailing spaces.
-  hi SpecialKey cterm=none ctermbg=DarkBlue ctermfg=White
+  hi SpecialKey cterm=none ctermfg=Red
 end
 
 if has("gui_running")
-  colorscheme moria
-  " So we can see tabs and trailing spaces.
-  hi SpecialKey guibg=#3d5074
+  " colorscheme moria
+  " hi SpecialKey guibg=#3d5074
 
-  set showtabline=2           " always show tabs
+  let rdark_current_line = 1
+  colorscheme rdark
 
-  set gfn=Consolas:h9:cANSI
+  set lines=48 columns=160
+  set showtabline=2  " always show tabs
+
   " On Windows, must be executed before gui is shown (.gvimrc is too late).
   set guioptions=c
- " set guioptions-=eTmMrRlLb
+  set gfn=Consolas:h9:cANSI
 end
 
 " ---------------------------------------------------------------------------
@@ -144,6 +146,49 @@ vmap } /\S/;/^\s*$<CR>
 map <F7> :setlocal invspell<CR>
 imap <silent> <F7> <C-O>:silent setlocal invspell<CR>
 
+" Settings for VimClojure
+let vimclojure#HighlightBuiltins=1
+let vimclojure#ParenRainbow=1
+
+" ---------------------------------------------------------------------------
+"  Automagic Clojure folding on defn's and defmacro's
+"
+function GetClojureFold()
+  if getline(v:lnum) =~ '^\s*(defn.*\s'
+    return ">1"
+  elseif getline(v:lnum) =~ '^\s*(defmacro.*\s'
+    return ">1"
+  elseif getline(v:lnum) =~ '^\s*(defmethod.*\s'
+    return ">1"
+  elseif getline(v:lnum) =~ '^\s*$'
+    let my_cljnum = v:lnum
+    let my_cljmax = line("$")
+
+    while (1)
+      let my_cljnum = my_cljnum + 1
+      if my_cljnum > my_cljmax
+        return "<1"
+      endif
+
+      let my_cljdata = getline(my_cljnum)
+
+      " If we match an empty line, stop folding
+      if my_cljdata =~ '^$'
+        return "<1"
+      else
+        return "="
+      endif
+    endwhile
+  else
+    return "="
+  endif
+endfunction
+
+function TurnOnClojureFolding()
+  setlocal foldexpr=GetClojureFold()
+  setlocal foldmethod=expr
+endfunction
+
 " Autoload commands:
 if has("autocmd")
   autocmd BufRead *.as set filetype=actionscript
@@ -152,4 +197,6 @@ if has("autocmd")
   autocmd BufReadPost * if line("'\"") | exe "'\"" | endif
   " Use tabs for makefiles
   autocmd FileType make setlocal noet ts=8 sw=8 sts=8
+  " Fold clojure methods
+  autocmd FileType clojure call TurnOnClojureFolding()
 endif
