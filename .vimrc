@@ -1,87 +1,137 @@
-set guioptions-=M  "must be executed before gui is shown to take effect
+" On Windows, vim defaults to $HOME/vimfiles,
+" but Vista+ supports .filenames just fine.
+set rtp+=$HOME/.vim
 
+" No modelines for security reasons [http://www.guninski.com/vim1.html]
+set modelines=0
 set nocompatible
+set secure              " don't allow FS modifications in CWD .vimrc/.exrc
 
-" Backups:
-set directory=$HOME/.vimbak
+" Backups
 set backup writebackup
 set backupdir=$HOME/.vimbak
 set backupskip=/tmp/*,/var/tmp/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
-set history=200          " Store last 200 commands as history.
-" Store in .viminfo: marks for 50 files, 200 lines of registers.
-set viminfo='50,\"200
-set updatecount=40       " Number of characters typed before updating swapfile.
-set updatetime=1000      " Milliseconds before updating swapfile.
+
+" Force .viminfo filename, store marks for 50 files, 200 lines of registers.
+set viminfo='50,\"200,n$HOME/.viminfo
+
+set history=200         " store last 200 commands as history
+set updatecount=40      " number of characters typed before updating swapfile
+set updatetime=1000     " milliseconds before updating swapfile
 set suffixes=.bak,~,.o,.swp
 
-" Attempt to get sane indenting:
-set autoindent
-set si
-set tw=0  " disable text autowrap at 80 columns
+set autoindent smartindent    " sane indenting
+set tw=0                " disable text autowrap at 80 columns
 set ts=2
 set sw=2
 set sts=2
-set expandtab            " Make sure that ^T, <<, >>, and the like use spaces.
+set expandtab           " make sure that ^T, <<, >>, and the like use spaces
 set cinoptions=l1,g0.5s,h0.5s,i2s,+2s,(0,W2s
-" Make sure that the tab key actually inserts a tab.
-"imap <TAB> <C-V><TAB>
 
-" Don't mess with my terminal unless I tell you to!
-set norestorescreen
-
-" Nice helper stuff:
+set norestorescreen     " don't mess with my terminal unless I tell you to!
+set noerrorbells
+set nohidden            " close the buffer when I close a tab
+set noautowrite         " don't automagically write on :next
+set lazyredraw          " don't redraw when don't have to
+set ttyfast
+set showcmd
 set showmode
 set showmatch
 set ruler
-set showcmd
-set incsearch
-set hlsearch             " Highlight previous search results
+set incsearch           " incremental search
+set hlsearch            " highlight previous search results
 set backspace=indent,eol,start
-set whichwrap=<,>,[,]
-set laststatus=2
+set matchpairs+=<:>           " add < and > to match pairs
+set whichwrap+=<,>,[,]        " cursor keys wrap too
+set wildmode=longest:full     " *wild* mode
+set wildignore+=*.o,*~,.lo    " ignore object files
+set wildmenu                  " menu has tab completion
+let maplocalleader=','        " shortcuts start with ,
+
 " filepath [modified][buffer][filetype,ro] line,col-virtualcol,byteoffset
-set statusline=%<%f%=\ %3.3m[%n][%Y%R]\ %{fugitive#statusline()}\ \ %-35(%3l,%c%V,%o\ \ %P\ (%L)%)%10(%b\ 0x%B\ %)
+"set statusline=%<%f%=\ %3.3m[%n][%Y%R]\ %{fugitive#statusline()}\ \ %-35(%3l,%c%V,%o\ \ %P\ (%L)%)%10(%b\ 0x%B\ %)
+set statusline=%<%f%=\ %3.3m[%n][%Y%R]\ \ %-35(%3l,%c%V,%o\ \ %P\ (%L)%)%10(%b\ 0x%B\ %)
+set laststatus=2
 
-" Tab-complete filenames to longest unambiguous match and present menu:
-" set wildmenu wildmode=longest:full
-set wildmenu
 
-"se exrc                " Load .vimrc/.exrc file from CWD.  (Danger!)
-set secure               " Don't allow FS modifications in CWD .vimrc/.exrc.
-
-" Enable syntax coloring
-syntax on
-set background=dark
-" xterm256 only
-" colorscheme moria256
-
-" So we can see tabs and trailing spaces.
-hi SpecialKey cterm=none ctermbg=DarkBlue ctermfg=White
+syntax on                     " enable syntax coloring
+filetype on                   " enable filetype detection
+filetype indent on            " enable filetype-specific indenting
+filetype plugin on            " enable filetype-specific plugins
 
 " Make it so that tabs and trailing spaces are always visible:
 " (Relys on syntax highlighting to turn them yellow.)
 set list
-set listchars=tab:\ \ ,trail:\ ,extends:»,precedes:«
+set listchars=tab:¬\ ,trail:\ ,extends:»,precedes:«
 
-" Some nice shortcuts:
-" Yank to end of line.
+set background=dark
+
+if !has("gui_running")
+  " So we can see tabs and trailing spaces.
+  hi SpecialKey cterm=none ctermbg=DarkBlue ctermfg=White
+end
+
+if has("gui_running")
+  colorscheme moria
+  " So we can see tabs and trailing spaces.
+  hi SpecialKey guibg=#3d5074
+
+  set showtabline=2           " always show tabs
+
+  set gfn=Consolas:h9:cANSI
+  " On Windows, must be executed before gui is shown (.gvimrc is too late).
+  set guioptions=c
+ " set guioptions-=eTmMrRlLb
+end
+
+" ---------------------------------------------------------------------------
+" Shorcuts
+
+" yank to end of line
 map Y y$
-" Reformat lines.
-map Q gq
-" Enter/leave paste mode.
-map gp :set invpaste<CR>:set paste?<CR>
-" Edit alternate file.
-map gg :e#<CR>
-" Turn on word-wrapping.
-map gw :se tw=75<CR>
-" Execute contents of register a.
-map \ @a
-" Get rid of trailing whitespace.
-map gc :%s/[ <Tab>]\+$//<CR>
+" correct type-o's on exit
+nmap q: :q
+" toggle paste mode
+nmap <LocalLeader>pp :set paste!<cr>
+" toggle wrapping
+nmap <LocalLeader>ww :set wrap!<cr>
+" toggle list mode
+nmap <LocalLeader>ll :set list!<cr>
+" toggle taglist on and off
+nmap <LocalLeader>tt :Tlist<cr>
 
-" Fix paragraph movement ('{' and '}') to ignore whitespace.
-" (This mostly works correctly, except when used in selection ('V') mode,
-"  where the last search is changed.)
+" change directory to that of current file
+nmap <LocalLeader>cd :cd%:p:h<cr>
+" change local directory to that of current file
+nmap <LocalLeader>lcd :lcd%:p:h<cr>
+" open all folds
+nmap <LocalLeader>o  :%foldopen!<cr>
+" close all folds
+nmap <LocalLeader>c  :%foldclose!<cr>
+" return to syntax folding with a big foldcolumn
+nmap <LocalLeader>sf :set foldcolumn=6 foldmethod=syntax<cr>
+" get rid of trailing whitespace
+map <LocalLeader>d   :%s/[ <Tab>]\+$//<CR>
+
+" Switch tabs with ctrl-tab and ctrl-shift-tab like most browsers
+map <silent> <C-Tab> gt
+map <silent> <C-S-Tab> gT
+" C-tab does not work in putty so map F2,F3 as well
+map <silent> <F2> :tabprevious<cr>
+map <silent> <F3> :tabnext<cr>
+
+" Diff with saved version of the file
+function! s:DiffWithSaved()
+  let filetype=&ft
+  diffthis
+  vnew | r # | normal! 1Gdd
+  diffthis
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! DiffSaved call s:DiffWithSaved()
+
+" Fix paragraph movement ('{' and '}') to ignore whitespace. This mostly
+" works, except in selection ('V') mode, where the last search is changed.
 nmap { ?\S?;?^\s*$<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>:nohlsearch<CR>:<CR>
 omap { ?\S?;?^\s*$<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>:nohlsearch<CR>:<CR>
 vmap { ?\S?;?^\s*$<CR>
@@ -89,33 +139,10 @@ nmap } /\S/;/^\s*$<CR>:call histdel("search", -1)<CR>:let @/ = histget("search",
 omap } /\S/;/^\s*$<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>:nohlsearch<CR>:<CR>
 vmap } /\S/;/^\s*$<CR>
 
-" move to next/previous buffer
-"map <silent> <F2> :bN!<CR>
-"map <silent> <F3> :bn!<CR>
-"imap <silent> <F2> <C-O>:bN!<CR>
-"imap <silent> <F3> <C-O>:bn!<CR>
-
-" tab navigation like firefox
-map <silent> <C-S-tab> :tabprevious<cr>
-map <silent> <C-tab> :tabnext<cr>
-imap <silent> <C-S-tab> <C-O>:tabprevious<cr>
-imap <silent> <C-tab> <C-O>:tabnext<cr>
-" C-tab does not work in putty so map F2,F3 as well
-map <silent> <F2> :tabprevious<cr>
-map <silent> <F3> :tabnext<cr>
-imap <silent> <F2> <C-O>:tabprevious<cr>
-imap <silent> <F3> <C-O>:tabnext<cr>
-" C-F2,F3 cycles through quickfix list
-map <silent> <C-F2> :cp<cr>
-map <silent> <C-F3> :cn<cr>
-imap <silent> <C-F2> <C-O>:cp<cr>
-imap <silent> <C-F3> <C-O>:cn<cr>
 
 " spelling
 map <F7> :setlocal invspell<CR>
 imap <silent> <F7> <C-O>:silent setlocal invspell<CR>
-
-set pastetoggle=<F4>
 
 " Autoload commands:
 if has("autocmd")
