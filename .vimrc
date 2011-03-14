@@ -8,6 +8,7 @@ set nocompatible
 set secure              " don't allow FS modifications in CWD .vimrc/.exrc
 
 " Backups
+set directory=$HOME/.vimbak
 set backup writebackup
 set backupdir=$HOME/.vimbak
 set backupskip=/tmp/*,/var/tmp/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
