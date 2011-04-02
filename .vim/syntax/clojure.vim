@@ -45,10 +45,10 @@ if g:vimclojure#HighlightBuiltins != 0
 		\            . "*1 *2 *3 *e",
 		\ "Define":    "def- defn defn- defmacro defmulti defmethod "
 		\            . "defstruct defonce declare definline definterface "
-		\            . "defprotocol defrecord deftype",
-		\ "Macro":     "and or -> assert with-out-str with-in-str with-open "
+		\            . "defprotocol defrecord deftype deftest",
+		\ "Macro":     "and or -> assert is with-out-str with-in-str with-open "
 		\            . "locking destructure ns dosync binding delay "
-		\            . "lazy-cons lazy-cat time assert doc with-precision "
+		\            . "lazy-cons lazy-cat time doc with-precision "
 		\            . "with-local-vars .. doto memfn proxy amap areduce "
 		\            . "refer-clojure future lazy-seq letfn "
 		\            . "with-loading-context bound-fn extend extend-protocol "
