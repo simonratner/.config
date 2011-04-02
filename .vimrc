@@ -48,7 +48,8 @@ set whichwrap+=<,>,[,]        " cursor keys wrap too
 set wildmode=longest:full     " *wild* mode
 set wildignore+=*.o,*~,.lo    " ignore object files
 set wildmenu                  " menu has tab completion
-let maplocalleader=','        " shortcuts start with ,
+let mapleader=','             " shortcuts start with ,
+let maplocalleader=','
 
 " filepath [modified][buffer][filetype,ro] line,col-virtualcol,byteoffset
 "set statusline=%<%f%=\ %3.3m[%n][%Y%R]\ %{fugitive#statusline()}\ \ %-35(%3l,%c%V,%o\ \ %P\ (%L)%)%10(%b\ 0x%B\ %)
@@ -89,6 +90,7 @@ end
 
 " ---------------------------------------------------------------------------
 " Shorcuts
+"
 
 " yank to end of line
 map Y y$
@@ -152,14 +154,24 @@ let vimclojure#HighlightBuiltins=1
 let vimclojure#ParenRainbow=1
 
 " ---------------------------------------------------------------------------
+"  Clojure comment blocks
+"
+map <Leader>; :call ClojureCommentUncomment()<CR>
+function! ClojureCommentUncomment()
+  let search_saved = @/
+  if getline('.') =~ '^;'
+    s/^;//  " remove ';' at beginning of line
+  else
+    s/^/;/  " insert ';' at beginning of line
+  endif
+  let @/ = search_saved
+endfunction
+
+" ---------------------------------------------------------------------------
 "  Automagic Clojure folding on defn's and defmacro's
 "
-function GetClojureFold()
-  if getline(v:lnum) =~ '^\s*(defn.*\s'
-    return ">1"
-  elseif getline(v:lnum) =~ '^\s*(defmacro.*\s'
-    return ">1"
-  elseif getline(v:lnum) =~ '^\s*(defmethod.*\s'
+function ClojureFoldLevel()
+  if getline(v:lnum) =~ '^\s*(def\w\+.*\s'
     return ">1"
   elseif getline(v:lnum) =~ '^\s*$'
     let my_cljnum = v:lnum
@@ -185,11 +197,6 @@ function GetClojureFold()
   endif
 endfunction
 
-function TurnOnClojureFolding()
-  setlocal foldexpr=GetClojureFold()
-  setlocal foldmethod=expr
-endfunction
-
 " Autoload commands:
 if has("autocmd")
   autocmd BufRead *.as set filetype=actionscript
@@ -199,5 +206,5 @@ if has("autocmd")
   " Use tabs for makefiles
   autocmd FileType make setlocal noet ts=8 sw=8 sts=8
   " Fold clojure methods
-  autocmd FileType clojure call TurnOnClojureFolding()
+  autocmd FileType clojure setlocal foldexpr=ClojureFoldLevel() foldmethod=expr foldignore=;
 endif
