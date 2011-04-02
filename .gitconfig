@@ -4,6 +4,7 @@ tree = log --graph --pretty=oneline --abbrev-commit --decorate
 
 [core]
 pager = less
+autocrlf = input
 
 [diff]
 
