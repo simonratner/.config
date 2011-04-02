@@ -29,7 +29,6 @@ set sts=2
 set expandtab           " make sure that ^T, <<, >>, and the like use spaces
 set cinoptions=l1,g0.5s,h0.5s,i2s,+2s,(0,W2s
 
-set norestorescreen     " don't mess with my terminal unless I tell you to!
 set noerrorbells
 set nowrap
 set nohidden            " close the buffer when I close a tab
