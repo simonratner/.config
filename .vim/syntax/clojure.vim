@@ -33,7 +33,7 @@ if g:vimclojure#HighlightBuiltins != 0
 		\ "Exception": "try catch finally throw",
 		\ "Repeat":    "recur map mapcat reduce filter for doseq dorun "
 		\            . "doall dotimes map-indexed keep keep-indexed",
-		\ "Special":   ". def do fn if let new quote var loop",
+		\ "Special":   ". def do fn let new quote var loop",
 		\ "Variable":  "*warn-on-reflection* this *assert* "
 		\            . "*agent* *ns* *in* *out* *err* *command-line-args* "
 		\            . "*print-meta* *print-readably* *print-length* "
@@ -45,7 +45,7 @@ if g:vimclojure#HighlightBuiltins != 0
 		\            . "*1 *2 *3 *e",
 		\ "Define":    "def- defn defn- defmacro defmulti defmethod "
 		\            . "defstruct defonce declare definline definterface "
-		\            . "defprotocol defrecord deftype deftest",
+		\            . "defprotocol defrecord deftype deftest defproject",
 		\ "Macro":     "and or -> assert is with-out-str with-in-str with-open "
 		\            . "locking destructure ns dosync binding delay "
 		\            . "lazy-cons lazy-cat time doc with-precision "
