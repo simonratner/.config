@@ -42,12 +42,12 @@ set ruler
 set incsearch           " incremental search
 set hlsearch            " highlight previous search results
 set backspace=indent,eol,start
-set matchpairs+=<:>           " add < and > to match pairs
-set whichwrap+=<,>,[,]        " cursor keys wrap too
-set wildmode=longest:full     " *wild* mode
-set wildignore+=*.o,*~,.lo    " ignore object files
-set wildmenu                  " menu has tab completion
-let mapleader=','             " shortcuts start with ,
+set matchpairs+=<:>             " add < and > to match pairs
+set whichwrap+=<,>,[,]          " cursor keys wrap too
+set wildmode=longest:full,full  " *wild* mode
+set wildignore+=*.o,*~,.lo      " ignore object files
+set wildmenu                    " menu has tab completion
+let mapleader=','               " shortcuts start with ,
 let maplocalleader=','
 
 " filepath [modified][buffer][filetype,ro] line,col-virtualcol,byteoffset
