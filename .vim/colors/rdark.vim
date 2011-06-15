@@ -87,6 +87,7 @@ hi Statement guifg=#729fcf gui=none
 hi Identifier guifg=#ffffff
 hi PreProc guifg=#fcaf3e
 hi Function guifg=#fcaf3e
+hi StorageClass guifg=#fcaf3e
 hi Type guifg=#e3e7df gui=none
 hi Keyword guifg=#eeeeec
 hi Special guifg=#888a85
