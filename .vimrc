@@ -1,6 +1,6 @@
 " On Windows, vim defaults to $HOME/vimfiles,
 " but Vista+ supports .filenames just fine.
-set rtp+=$HOME/.vim
+set rtp+=$USERPROFILE/.vim
 
 " No modelines for security reasons [http://www.guninski.com/vim1.html]
 set modelines=0
@@ -8,13 +8,13 @@ set nocompatible
 set secure              " don't allow FS modifications in CWD .vimrc/.exrc
 
 " Backups
-set directory=$HOME/.vimbak
+set directory=$USERPROFILE/.vimbak
 set backup writebackup
-set backupdir=$HOME/.vimbak
+set backupdir=$USERPROFILE/.vimbak
 set backupskip=/tmp/*,/var/tmp/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
 
 " Force .viminfo filename, store marks for 50 files, 200 lines of registers.
-set viminfo='50,\"200,n$HOME/.viminfo
+set viminfo='50,\"200,n$USERPROFILE/.viminfo
 
 set history=200         " store last 200 commands as history
 set updatecount=40      " number of characters typed before updating swapfile
@@ -170,7 +170,9 @@ endfunction
 "  Automagic Clojure folding on defn's and defmacro's
 "
 function ClojureFoldLevel()
-  if getline(v:lnum) =~ '^\s*(def\w\+.*\s'
+  if getline(v:lnum) =~ '^\s*(def\(n\|macro\|method\|test\).*\s'
+    return ">1"
+  elseif getline(v:lnum) =~ '^\s*(ns\s'
     return ">1"
   elseif getline(v:lnum) =~ '^\s*$'
     let my_cljnum = v:lnum
@@ -185,7 +187,7 @@ function ClojureFoldLevel()
       let my_cljdata = getline(my_cljnum)
 
       " If we match an empty line, stop folding
-      if my_cljdata =~ '^$'
+      if my_cljdata =~ '^\s*(def' || my_cljdata =~ '^$'
         return "<1"
       else
         return "="
