@@ -7,7 +7,14 @@ tree = log --graph --pretty=oneline --abbrev-commit --decorate
 pager = less
 autocrlf = input
 
+[log]
+pager =
+
 [diff]
 
 [color]
 ui = always
+
+[user]
+name = Simon Ratner
+email = simon+github@probablyprime.net
