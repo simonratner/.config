@@ -31,12 +31,6 @@ Set the vimclojure#WantNailgun variable in your vimrc.
 >
         let vimclojure#WantNailgun = 1
 <
-The actual server to connect to and the port of said server can be given
-via configuration variables. The defaults are:
->
-        let vimclojure#NailgunServer = "127.0.0.1"
-        let vimclojure#NailgunPort = "2113"
-<
 Note: Should there be an error when executing an interactive command
 and the error message goes away to quickly, you can use |:messages| to
 recall the message and read it conveniently without time pressure.
@@ -244,11 +238,6 @@ turned off.
                         of the buffer. This modifies the way the form is
                         indented.
 
-<LocalLeader>tr                                 *tr* *ToggleParenRainbow*
-                        Toggle the paren rainbow option. Note: After
-                        toggling the default colors will be used. Not any
-                        customised ones.
-
 Vim Repl
 --------
 
@@ -330,7 +319,7 @@ input for vim, please contact me.
 License
 -------
 
-Copyright (c) 2008-2011 Meikel Brandmeyer, Frankfurt am Main
+Copyright (c) 2008,2009,2010 Meikel Brandmeyer, Frankfurt am Main
 All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

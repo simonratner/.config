@@ -33,22 +33,22 @@ if g:vimclojure#HighlightBuiltins != 0
 		\ "Exception": "try catch finally throw",
 		\ "Repeat":    "recur map mapcat reduce filter for doseq dorun "
 		\            . "doall dotimes map-indexed keep keep-indexed",
-		\ "Special":   ". def do fn let new quote var loop",
+		\ "Special":   ". def do fn if let new quote var loop",
 		\ "Variable":  "*warn-on-reflection* this *assert* "
 		\            . "*agent* *ns* *in* *out* *err* *command-line-args* "
 		\            . "*print-meta* *print-readably* *print-length* "
 		\            . "*allow-unresolved-args* *compile-files* "
 		\            . "*compile-path* *file* *flush-on-newline* "
-		\            . "*math-context* *unchecked-math* *print-dup* "
+		\            . "*math-context* *print-dup* "
 		\            . "*print-level* *use-context-classloader* "
 		\            . "*source-path* *clojure-version* *read-eval* "
 		\            . "*1 *2 *3 *e",
 		\ "Define":    "def- defn defn- defmacro defmulti defmethod "
 		\            . "defstruct defonce declare definline definterface "
-		\            . "defprotocol defrecord deftype deftest defproject",
-		\ "Macro":     "and or -> assert is with-out-str with-in-str with-open "
+		\            . "defprotocol defrecord deftype",
+		\ "Macro":     "and or -> assert with-out-str with-in-str with-open "
 		\            . "locking destructure ns dosync binding delay "
-		\            . "lazy-cons lazy-cat time doc with-precision "
+		\            . "lazy-cons lazy-cat time assert doc with-precision "
 		\            . "with-local-vars .. doto memfn proxy amap areduce "
 		\            . "refer-clojure future lazy-seq letfn "
 		\            . "with-loading-context bound-fn extend extend-protocol "
@@ -206,16 +206,20 @@ syn match   clojureDispatch "\(#^\|#'\)"
 syn match   clojureAnonArg contained "%\(\d\|&\)\?"
 syn match   clojureVarArg contained "&"
 
-syn region clojureSexpLevel0 matchgroup=clojureParen0 start="(" matchgroup=clojureParen0 end=")"           contains=@clojureTopCluster,clojureSexpLevel1
-syn region clojureSexpLevel1 matchgroup=clojureParen1 start="(" matchgroup=clojureParen1 end=")" contained contains=@clojureTopCluster,clojureSexpLevel2
-syn region clojureSexpLevel2 matchgroup=clojureParen2 start="(" matchgroup=clojureParen2 end=")" contained contains=@clojureTopCluster,clojureSexpLevel3
-syn region clojureSexpLevel3 matchgroup=clojureParen3 start="(" matchgroup=clojureParen3 end=")" contained contains=@clojureTopCluster,clojureSexpLevel4
-syn region clojureSexpLevel4 matchgroup=clojureParen4 start="(" matchgroup=clojureParen4 end=")" contained contains=@clojureTopCluster,clojureSexpLevel5
-syn region clojureSexpLevel5 matchgroup=clojureParen5 start="(" matchgroup=clojureParen5 end=")" contained contains=@clojureTopCluster,clojureSexpLevel6
-syn region clojureSexpLevel6 matchgroup=clojureParen6 start="(" matchgroup=clojureParen6 end=")" contained contains=@clojureTopCluster,clojureSexpLevel7
-syn region clojureSexpLevel7 matchgroup=clojureParen7 start="(" matchgroup=clojureParen7 end=")" contained contains=@clojureTopCluster,clojureSexpLevel8
-syn region clojureSexpLevel8 matchgroup=clojureParen8 start="(" matchgroup=clojureParen8 end=")" contained contains=@clojureTopCluster,clojureSexpLevel9
-syn region clojureSexpLevel9 matchgroup=clojureParen9 start="(" matchgroup=clojureParen9 end=")" contained contains=@clojureTopCluster,clojureSexpLevel0
+if vimclojure#ParenRainbow != 0
+	syn region clojureSexpLevel0 matchgroup=clojureParen0 start="(" matchgroup=clojureParen0 end=")"           contains=@clojureTopCluster,clojureSexpLevel1
+	syn region clojureSexpLevel1 matchgroup=clojureParen1 start="(" matchgroup=clojureParen1 end=")" contained contains=@clojureTopCluster,clojureSexpLevel2
+	syn region clojureSexpLevel2 matchgroup=clojureParen2 start="(" matchgroup=clojureParen2 end=")" contained contains=@clojureTopCluster,clojureSexpLevel3
+	syn region clojureSexpLevel3 matchgroup=clojureParen3 start="(" matchgroup=clojureParen3 end=")" contained contains=@clojureTopCluster,clojureSexpLevel4
+	syn region clojureSexpLevel4 matchgroup=clojureParen4 start="(" matchgroup=clojureParen4 end=")" contained contains=@clojureTopCluster,clojureSexpLevel5
+	syn region clojureSexpLevel5 matchgroup=clojureParen5 start="(" matchgroup=clojureParen5 end=")" contained contains=@clojureTopCluster,clojureSexpLevel6
+	syn region clojureSexpLevel6 matchgroup=clojureParen6 start="(" matchgroup=clojureParen6 end=")" contained contains=@clojureTopCluster,clojureSexpLevel7
+	syn region clojureSexpLevel7 matchgroup=clojureParen7 start="(" matchgroup=clojureParen7 end=")" contained contains=@clojureTopCluster,clojureSexpLevel8
+	syn region clojureSexpLevel8 matchgroup=clojureParen8 start="(" matchgroup=clojureParen8 end=")" contained contains=@clojureTopCluster,clojureSexpLevel9
+	syn region clojureSexpLevel9 matchgroup=clojureParen9 start="(" matchgroup=clojureParen9 end=")" contained contains=@clojureTopCluster,clojureSexpLevel0
+else
+	syn region clojureSexp       matchgroup=clojureParen0 start="(" matchgroup=clojureParen0 end=")"           contains=@clojureTopCluster
+endif
 
 syn region  clojureAnonFn  matchgroup=clojureParen0 start="#(" matchgroup=clojureParen0 end=")"  contains=@clojureTopCluster,clojureAnonArg,clojureSexpLevel0
 syn region  clojureVector  matchgroup=clojureParen0 start="\[" matchgroup=clojureParen0 end="\]" contains=@clojureTopCluster,clojureVarArg,clojureSexpLevel0
@@ -289,16 +293,6 @@ if vimclojure#ParenRainbow != 0
 		highlight default clojureParen8 ctermfg=blue        guifg=darkslateblue
 		highlight default clojureParen9 ctermfg=darkmagenta guifg=darkviolet
 	endif
-else
-	HiLink clojureParen1 clojureParen0
-	HiLink clojureParen2 clojureParen0
-	HiLink clojureParen3 clojureParen0
-	HiLink clojureParen4 clojureParen0
-	HiLink clojureParen5 clojureParen0
-	HiLink clojureParen6 clojureParen0
-	HiLink clojureParen7 clojureParen0
-	HiLink clojureParen8 clojureParen0
-	HiLink clojureParen9 clojureParen0
 endif
 
 delcommand HiLink

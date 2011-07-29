@@ -2,6 +2,13 @@
 " but Vista+ supports .filenames just fine.
 set rtp+=$USERPROFILE/.vim
 
+" If Windows shell integration ("Edit with Vim") throws errors about
+" missing functions and plugins, change the following registry key:
+"   [HKEY_CLASSES_ROOT\*\shell\gvim\command]
+"   (default) = "path\to\gvim.exe" --cmd "set rtp+=$USERPROFILE/.vim" "%L"
+
+call pathogen#runtime_append_all_bundles()
+
 " No modelines for security reasons [http://www.guninski.com/vim1.html]
 set modelines=0
 set nocompatible
@@ -124,6 +131,8 @@ map <silent> <C-S-Tab> gT
 map <silent> <F2> :tabprevious<cr>
 map <silent> <F3> :tabnext<cr>
 
+map <silent> <F4> :NERDTreeToggle<cr>
+
 " Diff with saved version of the file
 function! s:DiffWithSaved()
   let filetype=&ft
@@ -148,23 +157,11 @@ vmap } /\S/;/^\s*$<CR>
 map <F7> :setlocal invspell<CR>
 imap <silent> <F7> <C-O>:silent setlocal invspell<CR>
 
+" ---------------------------------------------------------------------------
 " Settings for VimClojure
+"
 let vimclojure#HighlightBuiltins=1
 let vimclojure#ParenRainbow=1
-
-" ---------------------------------------------------------------------------
-"  Clojure comment blocks
-"
-map <Leader>; :call ClojureCommentUncomment()<CR>
-function! ClojureCommentUncomment()
-  let search_saved = @/
-  if getline('.') =~ '^;'
-    s/^;//  " remove ';' at beginning of line
-  else
-    s/^/;/  " insert ';' at beginning of line
-  endif
-  let @/ = search_saved
-endfunction
 
 " ---------------------------------------------------------------------------
 "  Automagic Clojure folding on defn's and defmacro's
