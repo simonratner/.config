@@ -1,6 +1,7 @@
 " On Windows, vim defaults to $HOME/vimfiles,
 " but Vista+ supports .filenames just fine.
 set rtp+=$USERPROFILE/.vim
+set encoding=utf-8
 
 " If Windows shell integration ("Edit with Vim") throws errors about
 " missing functions and plugins, change the following registry key:
@@ -131,7 +132,15 @@ map <silent> <C-S-Tab> gT
 map <silent> <F2> :tabprevious<cr>
 map <silent> <F3> :tabnext<cr>
 
+" ---------------------------------------------------------------------------
+" Settings for NERDTree
+"
 map <silent> <F4> :NERDTreeToggle<cr>
+let NERDTreeDirArrows=1
+let NERDTreeMinimalUI=1
+let NERDTreeQuitOnOpen=1
+let NERDTreeShowBookmarks=1
+let NERDTreeWinSize=40
 
 " Diff with saved version of the file
 function! s:DiffWithSaved()

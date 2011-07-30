@@ -33,30 +33,30 @@ hi Cursor guibg=#babdb6
 hi ICursor guibg=#babdb6
 
 " Search
-hi Search guifg=#2e3436 guibg=#fcaf3e
-hi IncSearch guibg=#2e3436 guifg=#fcaf3e
+hi Search guifg=#2c3032 guibg=#fcaf3e
+hi IncSearch guibg=#2c3032 guifg=#fcaf3e
 
 " Window Elements
-hi StatusLine guifg=#2e3436 guibg=#babdb6 gui=none
-hi StatusLineNC guifg=#2e3436 guibg=#888a85 gui=none
-hi VertSplit guifg=#555753 guibg=#888a85 gui=none
-hi Visual guibg=#000000
+hi StatusLine guifg=#babdb6 guibg=#2c3032 gui=none
+hi StatusLineNC guifg=#888a85 guibg=#2c3032 gui=none
+hi VertSplit guifg=#2c3032 guibg=#2c3032 gui=none
+hi Visual guibg=#0a1012
 hi MoreMsg guifg=#729fcf
 hi Question guifg=#8ae234 gui=none
 hi WildMenu guifg=#eeeeec guibg=#0e1416
-hi LineNr guifg=#3f4b4d guibg=#000000
+hi LineNr guifg=#888a85 guibg=#2c3032
 hi SignColumn guibg=#1e2426
 
 " Pmenu
-hi Pmenu guibg=#2e3436 guifg=#eeeeec
+hi Pmenu guibg=#2c3032 guifg=#eeeeec
 hi PmenuSel guibg=#ffffff guifg=#1e2426
 hi PmenuSbar guibg=#555753
 hi PmenuThumb guifg=#ffffff
 
 " Diff
-hi DiffDelete guifg=#2e3436 guibg=#0e1416
+hi DiffDelete guifg=#2c3032 guibg=#0e1416
 hi DiffAdd guibg=#1f2b2d
-hi DiffChange guibg=#2e3436
+hi DiffChange guibg=#2c3032
 hi DiffText guibg=#000000 gui=none
 
 " Folds
@@ -69,12 +69,12 @@ hi Todo guifg=#fcaf3e guibg=bg
 hi SpecialKey guifg=#ef2929
 
 " Tabs
-hi TabLine guibg=#0a1012 guifg=#888a85
-hi TabLineFill guifg=#0a1012
-hi TabLineSel guibg=#555753 guifg=#eeeeec gui=none
+hi TabLine guibg=#0a1012 guifg=#888a85 gui=underline
+hi TabLineFill guibg=#0a1012 guifg=#888a85 gui=underline
+hi TabLineSel guibg=#2c3032 guifg=#eeeeec gui=underline
 
 " Matches
-hi MatchParen guifg=#2e3436 guibg=#fcaf3e
+hi MatchParen guifg=#2c3032 guibg=#fcaf3e
 
 " Tree
 hi Directory guifg=#ffffff
