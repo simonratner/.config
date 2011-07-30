@@ -44,7 +44,7 @@ hi Visual guibg=#0a1012
 hi MoreMsg guifg=#729fcf
 hi Question guifg=#8ae234 gui=none
 hi WildMenu guifg=#eeeeec guibg=#0e1416
-hi LineNr guifg=#888a85 guibg=#2c3032
+hi LineNr guifg=#656763 guibg=#1e2426
 hi SignColumn guibg=#1e2426
 
 " Pmenu
