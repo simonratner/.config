@@ -4,15 +4,11 @@ st = status -s
 tree = log --graph --pretty=oneline --abbrev-commit --decorate
 
 [core]
-pager = less
+pager =
 autocrlf = input
 
-[log]
-pager =
-
-[diff]
-
 [color]
+diff = always
 ui = always
 
 [user]
