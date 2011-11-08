@@ -84,8 +84,9 @@ if has("gui_running")
   " colorscheme moria
   " hi SpecialKey guibg=#3d5074
 
-  let rdark_current_line = 1
-  colorscheme rdark
+  "let rdark_current_line = 1
+  "colorscheme rdark
+  colorscheme jellybeans
 
   set lines=48 columns=160
   set showtabline=2  " always show tabs
