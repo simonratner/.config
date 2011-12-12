@@ -36,7 +36,9 @@ set sw=2
 set sts=2
 set expandtab           " make sure that ^T, <<, >>, and the like use spaces
 set cinoptions=l1,g0.5s,h0.5s,i2s,+2s,(0,W2s
+set relativenumber
 
+set visualbell t_vb=
 set noerrorbells
 set nowrap
 set nohidden            " close the buffer when I close a tab
@@ -53,7 +55,7 @@ set backspace=indent,eol,start
 set matchpairs+=<:>               " add < and > to match pairs
 set whichwrap+=<,>,[,]            " cursor keys wrap too
 set wildmode=longest:full,full    " *wild* mode
-set wildignore+=*.o,*~,.lo,*.pyc  " ignore object files
+set wildignore+=*.o,*~,.lo,*.pyc,*.class,.git
 set wildmenu                      " menu has tab completion
 let mapleader=','                 " shortcuts start with ,
 let maplocalleader=','
@@ -100,48 +102,45 @@ end
 " Shorcuts
 "
 
+" double percentage sign in command mode is expanded
+" to directory of current file - http://vimcasts.org/e/14
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+
 " yank to end of line
 map Y y$
 " correct type-o's on exit
 nmap q: :q
+" toggle buffers
+nmap <leader><leader> :b#<cr>
 " toggle paste mode
-nmap <LocalLeader>pp :set paste!<cr>
+nmap <leader>pp :set paste!<cr>
 " toggle wrapping
-nmap <LocalLeader>ww :set wrap!<cr>
+nmap <leader>ww :set wrap!<cr>
 " toggle list mode
-nmap <LocalLeader>ll :set list!<cr>
-" toggle taglist on and off
-nmap <LocalLeader>tt :Tlist<cr>
-
-" change directory to that of current file
-nmap <LocalLeader>cd :cd%:p:h<cr>
-" change local directory to that of current file
-nmap <LocalLeader>lcd :lcd%:p:h<cr>
-" open all folds
-nmap <LocalLeader>o  :%foldopen!<cr>
-" close all folds
-nmap <LocalLeader>c  :%foldclose!<cr>
-" return to syntax folding with a big foldcolumn
-nmap <LocalLeader>sf :set foldcolumn=6 foldmethod=syntax<cr>
+nmap <leader>ll :set list!<cr>
 " get rid of trailing whitespace
-map <LocalLeader>d   :%s/[ <Tab>]\+$//<CR>
+map <leader>d   :%s/[ <Tab>]\+$//<cr>
+
+" flush CommandT file cache and rescan
+map <leader>f :CommandT<cr>
+map <leader>F :CommandTFlush<cr>\|:CommandT<cr>
 
 " Switch tabs with ctrl-tab and ctrl-shift-tab like most browsers
-map <silent> <C-Tab> gt
-map <silent> <C-S-Tab> gT
+nmap <silent> <C-Tab> gt
+nmap <silent> <C-S-Tab> gT
+" NOTE: abandon insert mode by design
+imap <silent> <C-Tab> <C-c>:tabnext<cr>
+imap <silent> <C-S-Tab> <C-c>:tabprev<cr>
 " C-tab does not work in putty so map F2,F3 as well
-map <silent> <F2> :tabprevious<cr>
-map <silent> <F3> :tabnext<cr>
+nmap <silent> <F3> gt
+nmap <silent> <F2> gT
+" NOTE: abandon insert mode by design
+imap <silent> <F3> <C-c>:tabnext<cr>
+imap <silent> <F2> <C-c>:tabprev<cr>
 
-" ---------------------------------------------------------------------------
-" Settings for NERDTree
-"
-map <silent> <F4> :NERDTreeToggle<cr>
-let NERDTreeDirArrows=1
-let NERDTreeMinimalUI=1
-let NERDTreeQuitOnOpen=1
-let NERDTreeShowBookmarks=1
-let NERDTreeWinSize=40
+" spelling
+nmap <F7> :setlocal invspell<cr>
+imap <silent> <F7> <C-O>:silent setlocal invspell<cr>
 
 " Diff with saved version of the file
 function! s:DiffWithSaved()
@@ -153,19 +152,20 @@ function! s:DiffWithSaved()
 endfunction
 com! DiffSaved call s:DiffWithSaved()
 
-" Fix paragraph movement ('{' and '}') to ignore whitespace. This mostly
-" works, except in selection ('V') mode, where the last search is changed.
-nmap { ?\S?;?^\s*$<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>:nohlsearch<CR>:<CR>
-omap { ?\S?;?^\s*$<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>:nohlsearch<CR>:<CR>
-vmap { ?\S?;?^\s*$<CR>
-nmap } /\S/;/^\s*$<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>:nohlsearch<CR>:<CR>
-omap } /\S/;/^\s*$<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>:nohlsearch<CR>:<CR>
-vmap } /\S/;/^\s*$<CR>
+" ---------------------------------------------------------------------------
+" Settings for CommandT
+"
+let g:CommandTMatchWindowReverse=1
 
-
-" spelling
-map <F7> :setlocal invspell<CR>
-imap <silent> <F7> <C-O>:silent setlocal invspell<CR>
+" ---------------------------------------------------------------------------
+" Settings for NERDTree
+"
+map <silent> <F4> :NERDTreeToggle<cr>
+let NERDTreeDirArrows=1
+let NERDTreeMinimalUI=1
+let NERDTreeQuitOnOpen=1
+let NERDTreeShowBookmarks=1
+let NERDTreeWinSize=40
 
 " ---------------------------------------------------------------------------
 " Settings for VimClojure
