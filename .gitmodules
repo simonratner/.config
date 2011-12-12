@@ -19,3 +19,6 @@
 [submodule ".vim/bundle/vim-r"]
 	path = .vim/bundle/vim-r
 	url = https://github.com/jcfaria/Vim-R-plugin.git
+[submodule ".vim/bundle/command-t"]
+	path = .vim/bundle/command-t
+	url = git://git.wincent.com/command-t.git
