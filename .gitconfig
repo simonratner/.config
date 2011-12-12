@@ -4,6 +4,7 @@ st = status -s
 tree = log --graph --pretty=oneline --abbrev-commit --decorate
 
 [core]
+editor = vim -c ':set encoding=latin1'
 pager =
 autocrlf = input
 
