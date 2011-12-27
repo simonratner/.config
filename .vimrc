@@ -103,6 +103,16 @@ end
 " Shorcuts
 "
 
+" Avoid accidental scroll after shifted commands
+map <S-Up> <Up>
+map <S-Down> <Down>
+map <S-Left> <Left>
+map <S-Right> <Right>
+imap <S-Up> <Up>
+imap <S-Down> <Down>
+imap <S-Left> <Left>
+imap <S-Right> <Right>
+
 " double percentage sign in command mode is expanded
 " to directory of current file - http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
