@@ -8,7 +8,37 @@ set encoding=utf-8
 "   [HKEY_CLASSES_ROOT\*\shell\gvim\command]
 "   (default) = "path\to\gvim.exe" --cmd "set rtp+=$USERPROFILE/.vim" "%L"
 
-call pathogen#runtime_append_all_bundles()
+" To disable a plugin, add it's bundle name to the following list
+let g:pathogen_disabled = []
+call pathogen#infect()
+
+" CtrlP configuration
+let g:ctrlp_map = ""
+let g:ctrlp_status_func = {
+  \ 'main': 'CtrlP_Statusline_1',
+  \ 'prog': 'CtrlP_Statusline_2',
+  \ }
+let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files']
+
+" Arguments: focus, byfname, s:regexp, prv, item, nxt, marked
+"            a:1    a:2      a:3       a:4  a:5   a:6  a:7
+fu! CtrlP_Statusline_1(...)
+  let focus = '['.a:1.']'
+  let fname = '['.a:2.']'
+  let regex = a:3 ? '[regex]' : ''
+  let mode = ' '.a:5.' '
+  let marked = ' '.a:7.' '
+  " Return the full statusline
+  retu getcwd().' %=%< '.focus.fname.regex.mode.marked
+endf
+
+" Arguments: len
+"            a:1
+fu! CtrlP_Statusline_2(...)
+  let len = ' '.a:1.' '
+  " Return the full statusline
+  retu getcwd().' %=%< '.len
+endf
 
 " No modelines for security reasons [http://www.guninski.com/vim1.html]
 set modelines=0
@@ -133,9 +163,9 @@ nmap <leader>ll :set list!<cr>
 " get rid of trailing whitespace
 map <leader>d   :%s/[ <Tab>]\+$//<cr>
 
-" flush CommandT file cache and rescan
-map <leader>f :CommandT<cr>
-map <leader>F :CommandTFlush<cr>\|:CommandT<cr>
+" fuzzy find
+map <leader>f :CtrlP<cr>
+map <leader>F :CtrlPReload<cr>\|:CtrlP<cr>
 
 " Switch tabs with ctrl-tab and ctrl-shift-tab like most browsers
 nmap <silent> <C-Tab> gt
