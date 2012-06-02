@@ -73,7 +73,7 @@ filetype plugin on            " enable filetype-specific plugins
 
 " Make it so that tabs and trailing spaces are always visible.
 set list
-set listchars=tab:»\ ,trail:·,extends:»,precedes:«
+set listchars=tab:¬\ ,trail:·,extends:»,precedes:«
 
 set background=dark
 
@@ -96,7 +96,8 @@ if has("gui_running")
 
   " On Windows, must be executed before gui is shown (.gvimrc is too late).
   set guioptions=c
-  set gfn=Consolas:h9:cANSI
+  set gfn=Meslo_LG_M:h8:cANSI
+  "set gfn=Consolas:h9:cANSI
 end
 
 " ---------------------------------------------------------------------------
