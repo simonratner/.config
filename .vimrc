@@ -65,7 +65,17 @@ set sw=2
 set sts=2
 set expandtab           " make sure that ^T, <<, >>, and the like use spaces
 set cinoptions=l1,g0.5s,h0.5s,i2s,+2s,(0,W2s
-set relativenumber
+
+" relative line numbers in normal mode
+set rnu
+au BufEnter     * :set rnu
+au BufLeave     * :set nu
+au WinEnter     * :set rnu
+au WinLeave     * :set nu
+au InsertEnter  * :set nu
+au InsertLeave  * :set rnu
+au FocusLost    * :set nu
+au FocusGained  * :set rnu
 
 set visualbell t_vb=
 set noerrorbells
