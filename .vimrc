@@ -78,6 +78,7 @@ au FocusLost    * :set nu
 au FocusGained  * :set rnu
 
 set visualbell t_vb=
+set colorcolumn=+2
 set noerrorbells
 set nowrap
 set nohidden            " close the buffer when I close a tab
@@ -116,25 +117,21 @@ set listchars=tab:¬\ ,trail:·,extends:»,precedes:«
 
 set background=dark
 
-if !has("gui_running")
-  " So we can see tabs and trailing spaces.
-  hi SpecialKey cterm=none ctermfg=Red
-end
-
 colorscheme jellybeans
 
+if !has("gui_running")
+  " So we can see tabs and trailing spaces.
+  hi SpecialKey cterm=none ctermbg=none ctermfg=DarkRed
+end
+
 if has("gui_running")
-  " colorscheme moria
-  " hi SpecialKey guibg=#3d5074
-
-  "let rdark_current_line = 1
-  "colorscheme rdark
-
   set lines=48 columns=160
+  set linespace=1
   set showtabline=2  " always show tabs
 
   " On Windows, must be executed before gui is shown (.gvimrc is too late).
-  set guioptions=c
+  set guioptions=ce
+
   set gfn=Meslo_LG_M:h8:cANSI
   "set gfn=Consolas:h9:cANSI
 end
