@@ -51,10 +51,9 @@ set backup writebackup
 set backupdir=$USERPROFILE/.vimbak
 set backupskip=/tmp/*,/var/tmp/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
 
-" Force .viminfo filename, store marks for 50 files, 200 lines of registers.
-set viminfo='50,\"200,n$USERPROFILE/.viminfo
+set history=200
+set viminfo='100,<0,h,n$USERPROFILE/.viminfo   " force .viminfo name on win32
 
-set history=200         " store last 200 commands as history
 set updatecount=40      " number of characters typed before updating swapfile
 set updatetime=1000     " milliseconds before updating swapfile
 set suffixes=.bak,~,.o,.swp
