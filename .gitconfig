@@ -3,23 +3,6 @@ l = log --format='%C(yellow)%h%Creset %s %C(black bold)(%cr)%Creset' -10
 st = status -s
 snap = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
 tree = log --graph --pretty=oneline --abbrev-commit --decorate
-week = !git log --format='%Creset%C(yellow)%h%Creset %s %C(black bold)' --no-merges --numstat -C \
-                --author=\"$(git config user.name)\" \
-                --after=\"$(date -v-Sat '+%b %d, %Y')\" \
-                --reverse | \
-    awk '$1~/[0-9a-f]{7}/ { \
-        if (c > 0) \
-            printf(\"(+%d, -%d)\\n\", p, m) \n\
-        printf(\"%s\", $0) \n\
-        p=0 \n\
-        m=0 \n\
-        c+=1 \
-    } NF==3 { \
-        p+=$1 \n P+=$1 \n\
-        m+=$2 \n M+=$2 \n\
-    } END { \
-        printf(\"(+%d, -%d)\\n\\t[m%d commits, +%d, -%d\\n\", p, m, c, P, M) \
-    }'
 authors = !git log --format='%h %ae' --no-merges --numstat -C | \
     awk '$1~/[0-9a-f]{7}/ { \
         split($2, asplit, \"@\") \n\

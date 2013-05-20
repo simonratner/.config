@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+author=`git config user.name`
+args=`getopt a: $*`
+if [ $? != 0 ]; then
+    cat <<EOF
+Usage: git week [-a author] [--] [adjust...]
+
+Options:
+    -a author   Author name or substring (default: $author)
+    adjust      Arguments passed directly to \`date -v\` (default: -Sat)
+
+EOF
+    exit 2
+fi
+set -- $args
+for i; do
+    case "$i"
+    in
+        -a)
+            author="$2";
+            shift; shift;;
+        --)
+            shift; break;
+    esac
+done
+after=`date ${@/#/-v} '+%b %d, %Y'`
+git log --format='%Creset%C(yellow)%h%Creset %s %C(black bold)' --no-merges --numstat -C \
+        --author="$author" \
+        --after="$after" \
+        --reverse | \
+    awk "\$1~/[0-9a-f]{7}/ {
+        if (c > 0)
+            printf(\"(+%d, -%d)\n\", p, m)
+        printf(\"%s\", \$0)
+        p=0
+        m=0
+        c+=1
+    } NF==3 {
+        p+=\$1; P+=\$1
+        m+=\$2; M+=\$2
+    } END {
+        printf(\"(+%d, -%d)\n\t[m%d commits, +%d, -%d since $after\n\", p, m, c, P, M)
+    }"
