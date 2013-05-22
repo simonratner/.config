@@ -24,7 +24,8 @@ for i; do
             shift; break;
     esac
 done
-after=`date ${@/#/-v} '+%b %d, %Y'`
+adjust=${@/#/-v}
+after=`date ${adjust:=-v-Sat} '+%b %d, %Y'`
 git log --format='%Creset%C(yellow)%h%Creset %s %C(black bold)' --no-merges --numstat -C \
         --author="$author" \
         --after="$after" \
