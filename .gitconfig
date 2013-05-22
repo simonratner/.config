@@ -16,6 +16,9 @@ ui = always
 [diff]
 algorithm = patience
 
+[push]
+default = simple
+
 [user]
 name = Simon Ratner
 email = simon+github@probablyprime.net
