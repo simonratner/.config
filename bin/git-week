@@ -25,7 +25,7 @@ for i; do
     esac
 done
 adjust=${@/#/-v}
-after=`date ${adjust:=-v-Sat} '+%b %d, %Y'`
+after=`date ${adjust:=-v-Sat} '+%b %d %Y'`
 git log --format='%Creset%C(yellow)%h%Creset %s %C(black bold)' --no-merges --numstat -C \
         --author="$author" \
         --after="$after" \
@@ -41,5 +41,5 @@ git log --format='%Creset%C(yellow)%h%Creset %s %C(black bold)' --no-merges --nu
         p+=\$1; P+=\$1
         m+=\$2; M+=\$2
     } END {
-        printf(\"(+%d, -%d)\n\t[m%d commits, +%d, -%d since $after\n\", p, m, c, P, M)
+        printf(\"(+%d, -%d)\n\t[m%d commits since $after, +%d, -%d\n\", p, m, c, P, M)
     }"

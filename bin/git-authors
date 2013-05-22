@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+adjust=${@/#/-v}
+after=`date ${adjust:=-v1d -v1m -v1970y} '+%b %d %Y'`
+git log --format='%h %ae' --no-merges --numstat -C \
+        --after="$after" | \
+    awk "\$1~/[0-9a-f]{7}/ {
+        split(\$2, asplit, \"@\")
+        a=asplit[1]
+        c[a]+=1
+    } NF==3 {
+        p[a]+=\$1
+        m[a]+=\$2
+    } END {
+        for (a in c)
+            printf(\"[33m%-20s[m %2d commits since $after, +%d, -%d\n\", a, c[a], p[a], m[a])
+    }" | \
+    sort -k3 -nr
+

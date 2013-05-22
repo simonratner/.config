@@ -3,19 +3,6 @@ l = log --format='%C(yellow)%h%Creset %s %C(black bold)(%cr)%Creset' -10
 st = status -s
 snap = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
 tree = log --graph --pretty=oneline --abbrev-commit --decorate
-authors = !git log --format='%h %ae' --no-merges --numstat -C | \
-    awk '$1~/[0-9a-f]{7}/ { \
-        split($2, asplit, \"@\") \n\
-        a = asplit[1] \n\
-        c[a]+=1 \
-    } NF==3 { \
-        p[a]+=$1 \n\
-        m[a]+=$2 \
-    } END { \
-        for (a in c) \
-            printf(\"[33m%-20s[m %2d commits, +%d, -%d\\n\", a, c[a], p[a], m[a]) \
-    }' | \
-    sort -k3 -nr
 
 [core]
 editor = vim -c ':set encoding=latin1'
