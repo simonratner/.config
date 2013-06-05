@@ -168,6 +168,9 @@ nmap <leader>ww :set wrap!<cr>
 nmap <leader>ll :set list!<cr>
 " get rid of trailing whitespace
 map <leader>d   :%s/[ <Tab>]\+$//<cr>
+" insert timestamp at current cursor position
+nmap <leader>t  :r! date "+\%Y-\%m-\%d \%T\%Z"<cr>
+nmap <leader>T  :-1r! date "+\%Y-\%m-\%d \%T\%Z"<cr>
 
 " fuzzy find
 map <leader>f :CtrlP<cr>
