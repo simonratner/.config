@@ -1,7 +1,24 @@
 #!/usr/bin/env bash
 
-adjust=${@/#/-v}
-after=`date ${adjust:=-v1d -v1m -v1970y} '+%b %d %Y'`
+DATE=/usr/bin/date
+if [ ! -x "$DATE" ]; then
+  DATE=$(which date)
+fi
+if $DATE -v1d 2> /dev/null; then
+  DATEOPT="-v"
+  DATEOPT_DEFAULT="-v1d -v1m -v1970y"
+else
+  DATEOPT="-d"
+  DATEOPT_DEFAULT="-d 1970-01-01"
+fi
+
+SORT=/usr/bin/sort
+if [ ! -x "$SORT" ]; then
+  SORT=$(which sort)
+fi
+
+adjust=${@/#/$DATEOPT}
+after=`$DATE ${adjust:=$DATEOPT_DEFAULT} '+%b %d %Y'`
 git log --format='%h %ae' --no-merges --numstat -C \
         --after="$after" | \
     awk "\$1~/[0-9a-f]{7}/ {
@@ -15,5 +32,5 @@ git log --format='%h %ae' --no-merges --numstat -C \
         for (a in c)
             printf(\"[33m%-20s[m %2d commits since $after, +%d, -%d\n\", a, c[a], p[a], m[a])
     }" | \
-    sort -k3 -nr
+    $SORT -k3 -nr
 

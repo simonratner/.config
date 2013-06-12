@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+DATE="/usr/bin/date"
+if $DATE -v1d 2> /dev/null; then
+  DATEOPT="-v"
+  DATEOPT_DEFAULT="-v-sat"
+else
+  DATEOPT="-d"
+  DATEOPT_DEFAULT="-d last-saturday"
+fi
+
 author=`git config user.name`
 args=`getopt a: $*`
 if [ $? != 0 ]; then
@@ -24,8 +33,8 @@ for i; do
             shift; break;
     esac
 done
-adjust=${@/#/-v}
-after=`date ${adjust:=-v-Sat} '+%b %d %Y'`
+adjust=${@/#/$DATEOPT}
+after=`$DATE ${adjust:=$DATEOPT_DEFAULT} '+%b %d %Y'`
 git log --format='%Creset%C(yellow)%h%Creset %s %C(black bold)' --no-merges --numstat -C \
         --author="$author" \
         --after="$after" \
