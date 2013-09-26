@@ -1,6 +1,9 @@
+if has('win32') || has('win64')
+  let $HOME=$USERPROFILE
+endif
 " On Windows, vim defaults to $HOME/vimfiles,
 " but Vista+ supports .filenames just fine.
-set rtp+=$USERPROFILE/.vim
+set rtp+=$HOME/.vim
 set encoding=utf-8
 
 " If Windows shell integration ("Edit with Vim") throws errors about
@@ -46,13 +49,13 @@ set nocompatible
 set secure              " don't allow FS modifications in CWD .vimrc/.exrc
 
 " Backups
-set directory=$USERPROFILE/.vimbak
+set directory=$HOME/.vimbak
 set backup writebackup
-set backupdir=$USERPROFILE/.vimbak
+set backupdir=$HOME/.vimbak
 set backupskip=/tmp/*,/var/tmp/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
 
 set history=200
-set viminfo='100,<0,h,n$USERPROFILE/.viminfo   " force .viminfo name on win32
+set viminfo='100,<0,h,n$HOME/.viminfo   " force .viminfo name on win32
 
 set updatecount=40      " number of characters typed before updating swapfile
 set updatetime=1000     " milliseconds before updating swapfile
@@ -125,14 +128,14 @@ if !has("gui_running")
 end
 
 if has("gui_running")
-  set lines=48 columns=160
-  set linespace=1
+  set lines=40 columns=160
+  set linespace=0
   set showtabline=2  " always show tabs
 
   " On Windows, must be executed before gui is shown (.gvimrc is too late).
   set guioptions=ce
 
-  set gfn=Meslo_LG_M:h8:cANSI
+  set gfn=Meslo_LG_M:h10:cANSI
   "set gfn=Consolas:h9:cANSI
 end
 
