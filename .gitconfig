@@ -1,12 +1,13 @@
 [alias]
 l = log --format='%C(yellow)%h%Creset %s %C(black bold)(%cr)%Creset' -10
+br = branch --list
 st = status -s
-snap = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+snap = !git stash save "snapshot: $(date)" && git stash apply 'stash@{0}'
 tree = log --graph --pretty=oneline --abbrev-commit --decorate
 
 [core]
-editor = vim -c ':set encoding=latin1'
-pager = less -R -F
+editor = vim
+pager = less -XFR
 autocrlf = input
 
 [color]
@@ -14,6 +15,7 @@ diff = always
 ui = always
 
 [diff]
+pager = less -XFR
 algorithm = patience
 
 [push]
