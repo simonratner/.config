@@ -125,6 +125,8 @@ let g:jellybeans_overrides = {
 \    'Visual':  {'ctermfg': 'White', 'ctermbg': 'DarkGrey'},
 \    'LineNr':  {'ctermfg': 'DarkGrey', 'ctermbg': 'Black'},
 \    'ColorColumn': {'guibg': '111111', 'ctermbg': 'Black'},
+\    'NonText': {'guifg': '605958', 'guibg': '1c1c1c',
+\                  'ctermfg': 'DarkGrey', 'ctermbg': 'Black'},
 \    'VertSplit': {'guifg': '403c41', 'guibg': '1c1c1c',
 \                  'ctermfg': 'DarkGrey', 'ctermbg': 'Black'},
 \    'StatusLine': {'guifg': 'e8e8d3', 'guibg': '403c41',
@@ -156,6 +158,25 @@ if version >= 700
 endif
 hi! link SignColumn LineNr
 
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_left_alt_sep = '│'
+let g:airline_right_alt_sep = '│'
+let g:airline_linecolumn_prefix = '¶'
+if (has('win32') || has('win64')) && !has('gui_running')
+  let g:airline_branch_prefix = ''
+  let g:airline_readonly_symbol = 'RO'
+else
+  let g:airline_branch_prefix = '⌥'
+  let g:airline_readonly_symbol = '⌀'
+endif
+"let g:airline_section_z = '%10(%4l,%c%V%) %4(0x%B%)'
+call airline#parts#define_accent('mode', 'none')
+call airline#parts#define_raw('pos', '%3p%% %{g:airline_symbols.linenr} %10(%l,%c%V%)')
+call airline#parts#define_raw('char', '%4(0x%B%)')
+let g:airline_section_a = airline#section#create_left(['mode', 'paste', 'iminsert'])
+let g:airline_section_z = airline#section#create_right(['pos', 'char'])
+
 if has("gui_running")
   set lines=40 columns=160
   set linespace=0
@@ -164,7 +185,8 @@ if has("gui_running")
   " On Windows, must be executed before gui is shown (.gvimrc is too late).
   set guioptions=ce
 
-  set gfn=Meslo_LG_M:h10:cANSI
+  "set gfn=Meslo\ LG\ S\ for\ Powerline:h13
+  set gfn=Meslo_LG_S:h10
   "set gfn=Consolas:h9:cANSI
 end
 
