@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-DATE="/usr/bin/date"
+DATE="/bin/date"
+if [ ! -x $DATE ]; then
+    DATE="/usr/bin/date"
+fi
 if $DATE -v1d 2> /dev/null; then
   DATEOPT="-v"
   DATEOPT_DEFAULT="-v-sat"
