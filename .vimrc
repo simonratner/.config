@@ -4,6 +4,7 @@ endif
 " On Windows, vim defaults to $HOME/vimfiles,
 " but Vista+ supports .filenames just fine.
 set rtp+=$HOME/.vim
+set rtp+=$GOROOT/misc/vim
 set encoding=utf-8
 
 " If Windows shell integration ("Edit with Vim") throws errors about
@@ -266,7 +267,9 @@ if has("autocmd")
   " When editing a file, always jump to the last cursor position
   autocmd BufReadPost * if line("'\"") | exe "'\"" | endif
   " Use tabs for makefiles
-  autocmd FileType make setlocal noet ts=8 sw=8 sts=8
+  autocmd FileType make setlocal noet ts=2 sw=2 sts=2
+  " Use tabs for go
+  autocmd FileType go setlocal noet ts=2 sw=2 sts=2
   " Fold clojure methods
   autocmd FileType clojure setlocal foldexpr=ClojureFoldLevel() foldmethod=expr foldignore=;
 endif
