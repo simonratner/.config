@@ -183,9 +183,13 @@ if has("gui_running")
   " On Windows, must be executed before gui is shown (.gvimrc is too late).
   set guioptions=ce
 
-  "set gfn=Meslo\ LG\ S\ for\ Powerline:h13
-  set gfn=Meslo_LG_S:h10
-  "set gfn=Consolas:h9:cANSI
+  if has("mac")
+    set gfn=Meslo\ LG\ S\ Regular\ for\ Powerline:h13
+    "set gfn=Menlo_Regular:h13
+  else
+    set gfn=Meslo_LG_S:h10
+    "set gfn=Consolas:h9:cANSI
+  endif
 end
 
 if !has('gui_running')
