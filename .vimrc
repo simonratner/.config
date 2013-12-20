@@ -117,16 +117,44 @@ filetype plugin on            " enable filetype-specific plugins
 
 " Make it so that tabs and trailing spaces are always visible.
 set list
-set listchars=tab:¬\ ,trail:·,extends:»,precedes:«
+set listchars=tab:Â¬\ ,trail:Â·,nbsp:Â·,extends:Â»,precedes:Â«
+set fillchars+=vert:â”‚
+
+let g:jellybeans_overrides = {
+\    'Cursor':  {'guifg': '404040', 'guibg': 'e8e8d3'},
+\    'Visual':  {'ctermfg': 'White', 'ctermbg': 'DarkGrey'},
+\    'LineNr':  {'ctermfg': 'DarkGrey', 'ctermbg': 'Black'},
+\    'ColorColumn': {'guibg': '111111', 'ctermbg': 'Black'},
+\    'VertSplit': {'guifg': '403c41', 'guibg': '1c1c1c',
+\                  'ctermfg': 'DarkGrey', 'ctermbg': 'Black'},
+\    'StatusLine': {'guifg': 'e8e8d3', 'guibg': '403c41',
+\                   'ctermfg': 'White', 'ctermbg': 'DarkGrey'},
+\    'StatusLineNC': {'guifg': '808080', 'guibg': '403c41',
+\                     'ctermfg': 'Grey', 'ctermbg': 'DarkGrey'},
+\
+\    'MatchParen': {'guifg': 'f0a0c0', 'guibg': '302028',
+\                   'ctermfg': 'Magenta', 'ctermbg': 'DarkMagenta',
+\                   'attr': 'underline'},
+\
+\    'Comment': {'guifg': '605958', 'ctermfg': 'DarkGrey', 'attr': 'italic'},
+\    'Todo':    {'guifg': '404040', 'guibg': 'fad07a',
+\                'ctermfg': 'Black', 'ctermbg': 'Yellow',
+\                'attr': 'italic'},
+\    'Search': {'ctermfg': 'Magenta', 'ctermbg': 'DarkMagenta'},
+\    'SpecialKey': {'guifg': 'cc0000', 'ctermfg': 'DarkRed'},
+\}
 
 set background=dark
-
 colorscheme jellybeans
 
-if !has("gui_running")
-  " So we can see tabs and trailing spaces.
-  hi SpecialKey cterm=none ctermbg=none ctermfg=DarkRed
-end
+" Customise spell undercurl colours
+if version >= 700
+  hi SpellBad   guisp=#cc0000 gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkRed term=underline cterm=underline
+  hi SpellCap   guisp=#cf6a4c gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkYellow term=underline cterm=underline
+  hi SpellRare  guisp=#cc00cc gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkMagenta term=underline cterm=underline
+  hi SpellLocal guisp=#cc00cc gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkMagenta term=underline cterm=underline
+endif
+hi! link SignColumn LineNr
 
 if has("gui_running")
   set lines=40 columns=160
