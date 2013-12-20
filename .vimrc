@@ -124,15 +124,15 @@ let g:jellybeans_overrides = {
 \    'Cursor':  {'guifg': '404040', 'guibg': 'e8e8d3'},
 \    'Visual':  {'ctermfg': 'White', 'ctermbg': 'DarkGrey'},
 \    'LineNr':  {'ctermfg': 'DarkGrey', 'ctermbg': 'Black'},
-\    'ColorColumn': {'guibg': '111111', 'ctermbg': 'Black'},
+\    'ColorColumn': {'guibg': '111111', 'ctermbg': 'Black', '256ctermbg': 234},
 \    'NonText': {'guifg': '605958', 'guibg': '1c1c1c',
-\                  'ctermfg': 'DarkGrey', 'ctermbg': 'Black'},
+\                  'ctermfg': 'DarkGrey', 'ctermbg': 'Black', '256ctermbg': 234},
 \    'VertSplit': {'guifg': '403c41', 'guibg': '1c1c1c',
-\                  'ctermfg': 'DarkGrey', 'ctermbg': 'Black'},
+\                  'ctermfg': 'DarkGrey', 'ctermbg': 'Black', '256ctermbg': 234, '256ctermfg': 238},
 \    'StatusLine': {'guifg': 'e8e8d3', 'guibg': '403c41',
-\                   'ctermfg': 'White', 'ctermbg': 'DarkGrey'},
+\                   'ctermfg': 'White', 'ctermbg': 'DarkGrey', '256ctermbg': 236},
 \    'StatusLineNC': {'guifg': '808080', 'guibg': '403c41',
-\                     'ctermfg': 'Grey', 'ctermbg': 'DarkGrey'},
+\                     'ctermfg': 'Grey', 'ctermbg': 'DarkGrey', '256ctermbg': 236},
 \
 \    'MatchParen': {'guifg': 'f0a0c0', 'guibg': '302028',
 \                   'ctermfg': 'Magenta', 'ctermbg': 'DarkMagenta',
@@ -156,6 +156,8 @@ if version >= 700
   hi SpellRare  guisp=#cc00cc gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkMagenta term=underline cterm=underline
   hi SpellLocal guisp=#cc00cc gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkMagenta term=underline cterm=underline
 endif
+hi! StatusLine cterm=NONE term=NONE
+hi! StatusLineNC cterm=NONE term=NONE
 hi! link SignColumn LineNr
 
 let g:airline_left_sep = ''
