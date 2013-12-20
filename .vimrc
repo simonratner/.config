@@ -222,13 +222,13 @@ nmap q: :q
 " toggle buffers
 nmap <leader><leader> :b#<cr>
 " toggle paste mode
-nmap <leader>pp :set paste!<cr>
+nmap <leader>p :set paste!<cr>
 " toggle wrapping
-nmap <leader>ww :set wrap!<cr>
+nmap <leader>w :set wrap!<cr>
 " toggle list mode
-nmap <leader>ll :set list!<cr>
+nmap <leader>l :set list!<cr>
 " get rid of trailing whitespace
-map <leader>d   :%s/[ <Tab>]\+$//<cr>
+map <leader>d  :%s/[ <Tab>]\+$//<cr>
 " insert timestamp at current cursor position
 nmap <leader>t  :r! date "+\%Y-\%m-\%d \%T\%Z"<cr>
 nmap <leader>T  :-1r! date "+\%Y-\%m-\%d \%T\%Z"<cr>
@@ -236,6 +236,9 @@ nmap <leader>T  :-1r! date "+\%Y-\%m-\%d \%T\%Z"<cr>
 " fuzzy find
 map <leader>f :CtrlP<cr>
 map <leader>F :CtrlPReload<cr>\|:CtrlP<cr>
+
+" Switch windows easily
+nmap <silent> <leader><Tab> <C-w><C-w>
 
 " Switch tabs with ctrl-tab and ctrl-shift-tab like most browsers
 nmap <silent> <C-Tab> gt
