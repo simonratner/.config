@@ -170,11 +170,9 @@ else
   let g:airline_branch_prefix = '⌥'
   let g:airline_readonly_symbol = '⌀'
 endif
-"let g:airline_section_z = '%10(%4l,%c%V%) %4(0x%B%)'
 call airline#parts#define_accent('mode', 'none')
 call airline#parts#define_raw('pos', '%3p%% %{g:airline_symbols.linenr} %10(%l,%c%V%)')
 call airline#parts#define_raw('char', '%4(0x%B%)')
-let g:airline_section_a = airline#section#create_left(['mode', 'paste', 'iminsert'])
 let g:airline_section_z = airline#section#create_right(['pos', 'char'])
 
 if has("gui_running")
@@ -189,6 +187,15 @@ if has("gui_running")
   set gfn=Meslo_LG_S:h10
   "set gfn=Consolas:h9:cANSI
 end
+
+if !has('gui_running')
+  set ttimeoutlen=10
+  augroup FastEscape
+    autocmd!
+    au InsertEnter * set timeoutlen=0
+    au InsertLeave * set timeoutlen=1000
+  augroup END
+endif
 
 " ---------------------------------------------------------------------------
 " Shorcuts
