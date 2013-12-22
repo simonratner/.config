@@ -297,7 +297,7 @@ let vimclojure#ParenRainbow=1
 " ---------------------------------------------------------------------------
 "  Automagic Clojure folding on defn's and defmacro's
 "
-function ClojureFoldLevel()
+function! ClojureFoldLevel()
   if getline(v:lnum) =~ '^\s*(def\(n\|macro\|method\|test\).*\s'
     return ">1"
   elseif getline(v:lnum) =~ '^\s*(ns\s'
