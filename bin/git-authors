@@ -18,19 +18,23 @@ if [ ! -x "$SORT" ]; then
 fi
 
 adjust=${@/#/$DATEOPT}
-after=`$DATE ${adjust:=$DATEOPT_DEFAULT} '+%b %d %Y'`
-git log --format='%h %ae' --no-merges --numstat -C \
-        --after="$after" | \
-    awk --posix "\$1~/[0-9a-f]{7}/ {
-        split(\$2, asplit, \"@\")
-        a=asplit[1]
-        c[a]+=1
+after=`$DATE ${adjust:=$DATEOPT_DEFAULT} "+%b %d %Y"`
+git log --format="author %aE" --no-merges --numstat -C --after="$after" | \
+    awk --posix "/^author/ {
+        commit[i=\$2]+=1
+        next
     } NF==3 {
-        p[a]+=\$1
-        m[a]+=\$2
+        add[i]+=\$1
+        del[i]+=\$2
     } END {
-        for (a in c)
-            printf(\"[33m%-20s[m %4d commits since $after, +%d, -%d\n\", a, c[a], p[a], m[a])
+        for (i in commit) {
+            split(i, author, \"[@+]\")
+            printf(\"[33m%-20s[m %4d commits since $after, +%d, -%d\n\", \
+                author[1], \
+                commit[i], \
+                add[i], \
+                del[i])
+        }
     }" | \
     $SORT -k3 -nr
 
