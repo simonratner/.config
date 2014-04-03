@@ -160,6 +160,7 @@ hi! StatusLine cterm=NONE term=NONE
 hi! StatusLineNC cterm=NONE term=NONE
 hi! link SignColumn LineNr
 
+" Customise airline (vim-airline)
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_left_alt_sep = '│'
@@ -176,6 +177,9 @@ call airline#parts#define_accent('mode', 'none')
 call airline#parts#define_raw('pos', '%3p%% %{g:airline_symbols.linenr} %10(%l,%c%V%)')
 call airline#parts#define_raw('char', '%4(0x%B%)')
 let g:airline_section_z = airline#section#create_right(['pos', 'char'])
+
+" Disable quote concealing in json files (vim-json)
+let g:vim_json_syntax_conceal = 0
 
 if has("gui_running")
   set lines=40 columns=160
