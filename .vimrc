@@ -90,8 +90,8 @@ set noautowrite         " don't automagically write on :next
 set lazyredraw          " don't redraw when don't have to
 set ttyfast
 set showcmd
-set showmode
 set showmatch
+set noshowmode
 set ruler
 set incsearch           " incremental search
 set hlsearch            " highlight previous search results
