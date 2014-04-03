@@ -109,6 +109,7 @@ let maplocalleader=','
 set statusline=%<%f%=\ %3.3m[%n][%Y%R]\ \ %-35(%3l,%c%V,%o\ \ %P\ (%L)%)%10(%b\ 0x%B\ %)
 set laststatus=2
 
+set foldmethod=marker
 
 syntax on                     " enable syntax coloring
 filetype on                   " enable filetype detection
