@@ -25,4 +25,4 @@ local function git_prompt_filter()
 end
 
 --------------------------------------------------------------------------------
-clink.prompt.register_filter(git_prompt_filter)
+--clink.prompt.register_filter(git_prompt_filter)
