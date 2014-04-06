@@ -39,7 +39,7 @@ prompt_colour = -1
 # type: enum
 # Automatically answers cmd.exe's 'Terminate batch job (Y/N)?' prompts. 0 =
 # disabled, 1 = answer 'Y', 2 = answer 'N'.
-terminate_autoanswer = 0
+terminate_autoanswer = 1
 
 # name: Persistent command history
 # type: bool
