@@ -335,6 +335,7 @@ endfunction
 if has("autocmd")
   autocmd BufRead *.as set filetype=actionscript
   autocmd BufRead *.mxml set filetype=mxml
+  autocmd BufRead *.less set filetype=sass
   " When editing a file, always jump to the last cursor position
   autocmd BufReadPost * if line("'\"") | exe "'\"" | endif
   " Use tabs for makefiles
