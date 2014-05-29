@@ -13,6 +13,8 @@ doskey cd~=cd %USERPROFILE%
 doskey cd.=cd ..
 doskey cd..=cd ../..
 doskey cd...=cd ../../..
+doskey ll=ls -l $*
+doskey la=ls -la $*
 
 rem Node shortcuts
 doskey sails="node_modules/.bin/sails.cmd" $*
