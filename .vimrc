@@ -182,6 +182,9 @@ let g:airline_section_z = airline#section#create_right(['pos', 'char'])
 " Disable quote concealing in json files (vim-json)
 let g:vim_json_syntax_conceal = 0
 
+" Load per-project vimrc files
+let g:localvimrc_ask = 0
+
 if has("gui_running")
   set lines=40 columns=160
   set linespace=0

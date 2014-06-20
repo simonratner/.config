@@ -37,3 +37,6 @@
 [submodule ".vim/bundle/vim-jst"]
 	path = .vim/bundle/vim-jst
 	url = https://github.com/briancollins/vim-jst.git
+[submodule ".vim/bundle/vim-localvimrc"]
+	path = .vim/bundle/vim-localvimrc
+	url = https://github.com/embear/vim-localvimrc.git
