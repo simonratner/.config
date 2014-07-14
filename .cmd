@@ -19,6 +19,7 @@ doskey la=ls -la $*
 rem Node shortcuts
 doskey sails="node_modules/.bin/sails.cmd" $*
 doskey mocha="node_modules/.bin/mocha.cmd" $*
+doskey lcm="node_modules/.bin/lcm.cmd" $*
 
 rem Requires ansicon or a terminal that supports ansi escapes.
 prompt $E[0;1;30m[$D$S$T]$E[0m$S$+$E[0;34m$P$E]9;3;"$P"$E\$G$E[0m$_$$$S
