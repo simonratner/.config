@@ -111,7 +111,11 @@ set laststatus=2
 
 set foldmethod=marker
 
-syntax on                     " enable syntax coloring
+syn on                        " enable syntax coloring
+                              " extra comment tags
+syn keyword vimTodo                 NOTE NB contained
+syn keyword javaScriptCommentTodo   NOTE NB contained
+
 filetype on                   " enable filetype detection
 filetype indent on            " enable filetype-specific indenting
 filetype plugin on            " enable filetype-specific plugins
