@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# https://stackoverflow.com/questions/25931026/how-can-i-rename-a-git-stash
+
+stash=${1:-stash@\{0\}}
+rev=$(git rev-parse $stash) && git stash drop $stash || exit 1
+
+shift
+
+git diff-index --quiet HEAD
+dirty=$?
+if [ $dirty != 0 ]; then
+    git stash
+    if git stash apply --quiet $rev && git stash save "$@"; then
+        git stash pop --quiet stash@{1}
+    else
+        git stash pop --quiet
+    fi
+else
+    git stash apply --quiet $rev && git stash save "$@"
+fi
