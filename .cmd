@@ -10,9 +10,9 @@ rem    HKEY_CURRENT_USER\Software\Microsoft\Command Processor\Autorun
 
 rem Aliases
 doskey cd~=cd %USERPROFILE%
-doskey cd.=cd ..
-doskey cd..=cd ../..
-doskey cd...=cd ../../..
+doskey cd..=cd ..
+doskey cd...=cd ../..
+doskey cd....=cd ../../..
 doskey ll=ls -l $*
 doskey la=ls -la $*
 
@@ -22,7 +22,7 @@ doskey mocha="node_modules/.bin/mocha.cmd" $*
 doskey lcm="node_modules/.bin/lcm.cmd" $*
 
 rem Requires ansicon or a terminal that supports ansi escapes.
-prompt $E[0;1;30m[$D$S$T]$E[0m$S$+$E[0;34m$P$E]9;3;"$P"$E\$G$E[0m$_$$$S
+prompt $+$E[0;34m$P$E]9;3;"$P"$E\$G$E[1;37m$S$_$$$S
 
 rem Run ssh-agent, if not already running.
 ps | awk "/ssh-agent/ { print $1 }" > C:\Temp\ssh-agent-pid

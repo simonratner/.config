@@ -12,9 +12,9 @@ local function git_branch_fast()
     f:close()
     branch, count = string.gsub(branch, "ref: refs/heads/(.*)\n", "%1")
     if count == 0 then
-      return "-" -- detached head
+      return "(-) " -- detached
     else
-      return branch
+      return "("..branch..") "
     end
   end
   return ""
@@ -24,9 +24,9 @@ local function git_branch()
   -- Based on: http://stackoverflow.com/a/13003854/170413
   for branch in io.popen("git rev-parse --abbrev-ref HEAD 2>nul"):lines() do
     if branch == "HEAD" then
-      return "(-)" -- detached
+      return "(-) " -- detached
     else
-      return "("..branch..")"
+      return "("..branch..") "
     end
   end
   return ""
@@ -42,7 +42,7 @@ local function git_dirty()
 end
 
 local function git_prompt_filter()
-  clink.prompt.value = clink.prompt.value:gsub(">", "> \27[1;33m("..git_branch_fast()..")\27[0m")
+  clink.prompt.value = "\27[1;33m"..git_branch_fast().."\27[m"..clink.prompt.value
   return false
 end
 
