@@ -1,10 +1,12 @@
 if has('win32') || has('win64')
   let $HOME=$USERPROFILE
 endif
-" On Windows, vim defaults to $HOME/vimfiles,
-" but Vista+ supports .filenames just fine.
-set rtp+=$HOME/.vim
-set rtp+=$GOROOT/misc/vim
+" On Windows, vim defaults to $HOME/vimfiles, but .vim is just fine.
+set rtp^=$GOROOT/misc/vim
+set rtp^=$HOME/.vim
+set rtp+=$HOME/.vim/after
+set rtp-=$HOME/vimfiles
+set rtp-=$HOME/vimfiles/after
 set encoding=utf-8
 
 " If Windows shell integration ("Edit with Vim") throws errors about
@@ -13,36 +15,29 @@ set encoding=utf-8
 "   (default) = "path\to\gvim.exe" --cmd "set rtp+=$USERPROFILE/.vim" "%L"
 
 " To disable a plugin, add it's bundle name to the following list
-let g:pathogen_disabled = []
+let g:pathogen_disabled = ["vim-javascript", "vim-airline"]
 call pathogen#infect()
 
-" CtrlP configuration
-let g:ctrlp_map = ""
-let g:ctrlp_status_func = {
-  \ 'main': 'CtrlP_Statusline_1',
-  \ 'prog': 'CtrlP_Statusline_2',
-  \ }
-let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files']
-
-" Arguments: focus, byfname, s:regexp, prv, item, nxt, marked
-"            a:1    a:2      a:3       a:4  a:5   a:6  a:7
-fu! CtrlP_Statusline_1(...)
-  let focus = '['.a:1.']'
-  let fname = '['.a:2.']'
-  let regex = a:3 ? '[regex]' : ''
-  let mode = ' '.a:5.' '
-  let marked = ' '.a:7.' '
-  " Return the full statusline
-  retu getcwd().' %=%< '.focus.fname.regex.mode.marked
-endf
-
-" Arguments: len
-"            a:1
-fu! CtrlP_Statusline_2(...)
-  let len = ' '.a:1.' '
-  " Return the full statusline
-  retu getcwd().' %=%< '.len
-endf
+" Windows terminal config.
+let s:winconsole = (has('win32') || has('win64')) && !has('gui_running')
+if s:winconsole
+  set term=xterm
+  " Enable 256 colours.
+  let &t_Co=256
+  let &t_AB="\e[48;5;%dm"
+  let &t_AF="\e[0;38;5;%dm"
+  let &t_Sb="\e[48;5;%dm"
+  let &t_Sf="\e[0;38;5;%dm"
+  " Enable scroll wheel.
+  inoremap <Esc>[62~ <C-X><C-E>
+  inoremap <Esc>[63~ <C-X><C-Y>
+  inoremap <Esc>[64~ <C-X><C-E>
+  inoremap <Esc>[65~ <C-X><C-Y>
+  nnoremap <Esc>[62~ <C-E>
+  nnoremap <Esc>[63~ <C-Y>
+  nnoremap <Esc>[64~ <C-E>
+  nnoremap <Esc>[65~ <C-Y>
+endif
 
 " No modelines for security reasons [http://www.guninski.com/vim1.html]
 set modelines=0
@@ -70,15 +65,16 @@ set sts=2
 set expandtab           " make sure that ^T, <<, >>, and the like use spaces
 set cinoptions=l1,g0.5s,h0.5s,i2s,+2s,(0,W2s
 
-" relative line numbers in normal mode
+" Relative line numbers in normal mode
+set nu
 set rnu
 au BufEnter     * :set rnu
-au BufLeave     * :set nu
+au BufLeave     * :set nornu
 au WinEnter     * :set rnu
-au WinLeave     * :set nu
-au InsertEnter  * :set nu
+au WinLeave     * :set nornu
+au InsertEnter  * :set nornu
 au InsertLeave  * :set rnu
-au FocusLost    * :set nu
+au FocusLost    * :set nornu
 au FocusGained  * :set rnu
 
 set visualbell t_vb=
@@ -104,17 +100,11 @@ set wildmenu                      " menu has tab completion
 let mapleader=','                 " shortcuts start with ,
 let maplocalleader=','
 
-" filepath [modified][buffer][filetype,ro] line,col-virtualcol,byteoffset
-"set statusline=%<%f%=\ %3.3m[%n][%Y%R]\ %{fugitive#statusline()}\ \ %-35(%3l,%c%V,%o\ \ %P\ (%L)%)%10(%b\ 0x%B\ %)
-set statusline=%<%f%=\ %3.3m[%n][%Y%R]\ \ %-35(%3l,%c%V,%o\ \ %P\ (%L)%)%10(%b\ 0x%B\ %)
 set laststatus=2
 
 set foldmethod=marker
 
 syn on                        " enable syntax coloring
-                              " extra comment tags
-syn keyword vimTodo                 NOTE NB contained
-syn keyword javaScriptCommentTodo   NOTE NB contained
 
 filetype on                   " enable filetype detection
 filetype indent on            " enable filetype-specific indenting
@@ -125,69 +115,157 @@ set list
 set listchars=tab:¬\ ,trail:·,nbsp:·,extends:»,precedes:«
 set fillchars+=vert:│
 
-let g:jellybeans_overrides = {
-\    'Cursor':  {'guifg': '404040', 'guibg': 'e8e8d3'},
-\    'Visual':  {'ctermfg': 'White', 'ctermbg': 'DarkGrey'},
-\    'LineNr':  {'ctermfg': 'DarkGrey', 'ctermbg': 'Black'},
-\    'ColorColumn': {'guibg': '111111', 'ctermbg': 'Black', '256ctermbg': 234},
-\    'NonText': {'guifg': '605958', 'guibg': '1c1c1c',
-\                  'ctermfg': 'DarkGrey', 'ctermbg': 'Black', '256ctermbg': 234},
-\    'VertSplit': {'guifg': '403c41', 'guibg': '1c1c1c',
-\                  'ctermfg': 'DarkGrey', 'ctermbg': 'Black', '256ctermbg': 234, '256ctermfg': 238},
-\    'StatusLine': {'guifg': 'e8e8d3', 'guibg': '403c41',
-\                   'ctermfg': 'White', 'ctermbg': 'DarkGrey', '256ctermbg': 236},
-\    'StatusLineNC': {'guifg': '808080', 'guibg': '403c41',
-\                     'ctermfg': 'Grey', 'ctermbg': 'DarkGrey', '256ctermbg': 236},
-\
-\    'MatchParen': {'guifg': 'f0a0c0', 'guibg': '302028',
-\                   'ctermfg': 'Magenta', 'ctermbg': 'DarkMagenta',
-\                   'attr': 'underline'},
-\
-\    'Comment': {'guifg': '605958', 'ctermfg': 'DarkGrey', 'attr': 'italic'},
-\    'Todo':    {'guifg': '404040', 'guibg': 'fad07a',
-\                'ctermfg': 'Black', 'ctermbg': 'Yellow',
-\                'attr': 'italic'},
-\    'Search': {'ctermfg': 'Magenta', 'ctermbg': 'DarkMagenta'},
-\    'SpecialKey': {'guifg': 'cc0000', 'ctermfg': 'DarkRed'},
-\}
-
+" Customise syntax highlighting (hybrid)
+let g:hybrid_use_Xresources = 1  " use first 16 terminal colours
 set background=dark
-colorscheme jellybeans
+colorscheme hybrid
 
-" Customise spell undercurl colours
+hi! link SpecialKey Error
+hi! link MatchParen Search
+syn keyword javascriptCommentTodo NOTE NB contained
+
+" Customise spell highlighting
 if version >= 700
   hi SpellBad   guisp=#cc0000 gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkRed term=underline cterm=underline
   hi SpellCap   guisp=#cf6a4c gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkYellow term=underline cterm=underline
   hi SpellRare  guisp=#cc00cc gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkMagenta term=underline cterm=underline
   hi SpellLocal guisp=#cc00cc gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkMagenta term=underline cterm=underline
 endif
-hi! StatusLine cterm=NONE term=NONE
-hi! StatusLineNC cterm=NONE term=NONE
-hi! link SignColumn LineNr
 
-" Customise airline (vim-airline)
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline_left_alt_sep = '│'
-let g:airline_right_alt_sep = '│'
-let g:airline_linecolumn_prefix = '¶'
-if (has('win32') || has('win64')) && !has('gui_running')
-  let g:airline_branch_prefix = ''
-  let g:airline_readonly_symbol = 'RO'
+" Customise status line (lightline)
+let g:lightline = {
+  \ 'colorscheme': 'jellybeans',
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlp_modes'] ],
+  \   'right': [ [ 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype', 'ctrlp_flags' ] ]
+  \ },
+  \ 'component_function': {
+  \   'fugitive':     'LightLineFugitive',
+  \   'filename':     'LightLineFilename',
+  \   'fileformat':   'LightLineFileformat',
+  \   'filetype':     'LightLineFiletype',
+  \   'fileencoding': 'LightLineFileencoding',
+  \   'mode':         'LightLineMode',
+  \   'ctrlp_modes':  'LightLineCtrlpModes',
+  \   'ctrlp_flags':  'LightLineCtrlpFlags',
+  \ },
+  \ 'mode_map': {
+  \   'n'     : 'N',
+  \   'c'     : 'C',
+  \   'i'     : 'I',
+  \   'R'     : 'R',
+  \   'v'     : 'V',
+  \   'V'     : 'V',
+  \   '\<C-v>': 'V',
+  \   's'     : 'S',
+  \   'S'     : 'S',
+  \   '\<C-s>': 'S',
+  \   '?'     : ' '
+  \ }}
+if s:winconsole
+  let g:lightline.separator = { 'left': '', 'right': '' }
+  let g:lightline.subseparator = { 'left': '│', 'right': '│' }
 else
-  let g:airline_branch_prefix = '⌥'
-  let g:airline_readonly_symbol = '⌀'
+  let g:lightline.separator = { 'left': '', 'right': '' }
+  let g:lightline.subseparator = { 'left': '', 'right': '' }
 endif
-call airline#parts#define_accent('mode', 'none')
-call airline#parts#define_raw('pos', '%3p%% %{g:airline_symbols.linenr} %10(%l,%c%V%)')
-call airline#parts#define_raw('char', '%4(0x%B%)')
-let g:airline_section_z = airline#section#create_right(['pos', 'char'])
+
+function! LightLineModified()
+  return &ft =~ 'help\|vimfiler' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! LightLineReadonly()
+  return &ft !~? 'help\|vimfiler' && &readonly ? (s:winconsole ? '[ro]' : '') : ''
+endfunction
+
+function! LightLineFilename()
+  let fname = expand('%:t')
+  if fname =~ 'ControlP'
+    return g:lightline.ctrlp_item
+  endif
+  return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+    \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+    \  &ft == 'vimshell' ? vimshell#get_status_string() :
+    \  fname != '' ? fname : '[No Name]') .
+    \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+endfunction
+
+function! LightLineFugitive()
+  if &ft !~? 'vimfiler' && exists('*fugitive#head')
+    let _ = fugitive#head()
+    return strlen(_) ? (s:winconsole ? ' '._ : ' '._) : ''
+  endif
+  return ''
+endfunction
+
+function! LightLineFileformat()
+  return expand('%:t') =~ 'ControlP' ? '' : winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightLineFiletype()
+  return expand('%:t') =~ 'ControlP' ? '' : winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightLineFileencoding()
+  return expand('%:t') =~ 'ControlP' ? '' : winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! LightLineMode()
+  let fname = expand('%:t')
+  if fname =~ 'ControlP'
+    call lightline#link('nR'[g:lightline.ctrlp_regex])
+    return '^P'
+  endif
+  return &ft == 'help' ? 'Help' :
+       \ &ft == 'vimfiler' ? 'Filer' :
+       \ &ft == 'vimshell' ? 'Shell' : lightline#mode()
+endfunction
+
+function! LightLineCtrlpModes()
+  let fname = expand('%:t')
+  if fname =~ 'ControlP'
+    return lightline#concatenate([g:lightline.ctrlp_next, g:lightline.ctrlp_prev], 0)
+  else
+    return ''
+  endif
+endfunction
+
+function! LightLineCtrlpFlags()
+  let fname = expand('%:t')
+  if fname =~ 'ControlP'
+    return lightline#concatenate([g:lightline.ctrlp_regex, g:lightline.ctrlp_file], 1)
+  else
+    return ''
+  endif
+endfunction
+
+" CtrlP configuration
+let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -co --exclude-standard']
+let g:ctrlp_status_func = {
+  \ 'main': 'CtrlPStatusFunc_1',
+  \ 'prog': 'CtrlPStatusFunc_2',
+  \ }
+
+function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
+  let g:lightline.ctrlp_regex = (a:regex == 1 ? 'regex' : '')
+  let g:lightline.ctrlp_file = a:byfname
+  let g:lightline.ctrlp_prev = a:prev
+  let g:lightline.ctrlp_item = a:item
+  let g:lightline.ctrlp_next = a:next
+  return lightline#statusline(0)
+endfunction
+
+function! CtrlPStatusFunc_2(str)
+  return lightline#statusline(0)
+endfunction
 
 " Disable quote concealing in json files (vim-json)
 let g:vim_json_syntax_conceal = 0
 
 " Load per-project vimrc files
 let g:localvimrc_ask = 0
+
+let g:jsx_ext_required = 0
 
 if has("gui_running")
   set lines=40 columns=160
@@ -196,14 +274,13 @@ if has("gui_running")
 
   " On Windows, must be executed before gui is shown (.gvimrc is too late).
   set guioptions=ce
-
-  if has("mac")
-    set gfn=Meslo\ LG\ S\ Regular\ for\ Powerline:h13
-    "set gfn=Menlo_Regular:h13
-  else
-    set gfn=Meslo_LG_S:h10
-    "set gfn=Consolas:h9:cANSI
-  endif
+  " Input font settings:
+  "   --asterisk=height
+  "   --i=serifs_round
+  "   --l=serifs_round
+  "   --zero=slash
+  "   --lineHeight=1.4
+  set gfn=InputMono_Light:h10
 end
 
 if !has('gui_running')
@@ -294,7 +371,7 @@ let g:CommandTMatchWindowReverse=1
 " Settings for NERDTree
 "
 map <silent> <F4> :NERDTreeToggle<cr>
-let NERDTreeDirArrows=1
+let NERDTreeDirArrows=0
 let NERDTreeMinimalUI=1
 let NERDTreeQuitOnOpen=1
 let NERDTreeShowBookmarks=1

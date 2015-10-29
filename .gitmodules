@@ -46,3 +46,21 @@
 [submodule ".vim/bundle/rust.vim"]
 	path = .vim/bundle/rust.vim
 	url = https://github.com/rust-lang/rust.vim.git
+[submodule ".vim/bundle/vim-hybrid"]
+	path = .vim/bundle/vim-hybrid
+	url = https://github.com/w0ng/vim-hybrid
+[submodule ".vim/bundle/yajs.vim"]
+	path = .vim/bundle/yajs.vim
+	url = https://githttps://github.com/othree/yajs.vim
+[submodule ".vim/bundle/lightline.vim"]
+	path = .vim/bundle/lightline.vim
+	url = https://github.com/itchyny/lightline.vim
+[submodule ".vim/bundle/vim-jsx"]
+	path = .vim/bundle/vim-jsx
+	url = https://github.com/mxw/vim-jsx.git
+[submodule ".vim/bundle/vim-js-indent"]
+	path = .vim/bundle/vim-js-indent
+	url = https://github.com/gavocanov/vim-js-indent.git
+[submodule ".vim/bundle/vim-characterize"]
+	path = .vim/bundle/vim-characterize
+	url = https://github.com/tpope/vim-characterize.git
