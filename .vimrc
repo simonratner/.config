@@ -330,7 +330,7 @@ nmap <leader>T  :-1r! date "+\%Y-\%m-\%d \%T\%Z"<cr>
 
 " fuzzy find
 map <leader>f :CtrlP<cr>
-map <leader>F :CtrlPReload<cr>\|:CtrlP<cr>
+map <leader>F :CtrlPClearCache<cr>\|:CtrlP<cr>
 
 " Switch windows easily
 nmap <silent> <leader><Tab> <C-w><C-w>
