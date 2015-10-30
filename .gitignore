@@ -1,0 +1,16 @@
+# History and backups
+.bash_history
+.cache/
+.viminfo
+.vimbak/
+.vim/.netrwhist
+
+# Keys
+.ssh/*
+!.ssh/*.pub
+!.ssh/config
+!.ssh/known_hosts
+!.ssh/authorized_keys
+
+# Windows registry
+ntuser*
