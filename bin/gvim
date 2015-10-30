@@ -1,0 +1,2 @@
+#!/bin/bash
+cmd //c $(dirname $0)/gvim.cmd $*
