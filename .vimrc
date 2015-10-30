@@ -280,7 +280,7 @@ if has("gui_running")
   "   --l=serifs_round
   "   --zero=slash
   "   --lineHeight=1.4
-  set gfn=InputMono_Light:h10
+  set gfn=InputMono:h10
 end
 
 if !has('gui_running')
@@ -335,6 +335,13 @@ map <leader>F :CtrlPClearCache<cr>\|:CtrlP<cr>
 " Switch windows easily
 nmap <silent> <leader><Tab> <C-w><C-w>
 
+" Map mintty C-Tab/C-S-Tab key codes
+set <F13>=[1;5I
+set <F14>=[1;6I
+map <F13> <C-Tab>
+map <F14> <C-S-Tab>
+map! <F13> <C-Tab>
+map! <F14> <C-S-Tab>
 " Switch tabs with ctrl-tab and ctrl-shift-tab like most browsers
 nmap <silent> <C-Tab> gt
 nmap <silent> <C-S-Tab> gT
