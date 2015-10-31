@@ -1,0 +1,15 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Applications\vim.exe]
+
+[HKEY_CLASSES_ROOT\Applications\vim.exe\shell]
+
+[HKEY_CLASSES_ROOT\Applications\vim.exe\shell\edit]
+"FriendlyAppName"="Vim"
+
+[HKEY_CLASSES_ROOT\Applications\vim.exe\shell\edit\command]
+@="c:\\lib\\git\\usr\\bin\\mintty -t \"%L\" -e vim -nc \"cd %%:p:h | map <C-z> <Nop>\" \"%L\""
+
+[HKEY_CLASSES_ROOT\*\OpenWithList\vim.exe]
+
+[HKEY_CLASSES_ROOT\.htm\OpenWithList\vim.exe]
