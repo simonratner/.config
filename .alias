@@ -1,0 +1,4 @@
+alias la='ls -a'
+alias ll='ls -l'
+
+alias gr='./gradlew --console=rich'
