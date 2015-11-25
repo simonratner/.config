@@ -15,7 +15,7 @@ then
   . "$COMPLETION_PATH/git-completion.bash"
   . "$COMPLETION_PATH/git-prompt.sh"
   PS1="$PS1"'\[\033[1;33m\]'
-  PS1="$PS1"'`__git_ps1 "(%s) "`'
+  PS1="$PS1"'`unalias git && __git_ps1 "(%s) "`'
 fi
 # }}}
 PS1="$PS1"'\[\033[0;34m\]\w>\[\033[0m\]\n$ '
