@@ -121,7 +121,6 @@ set background=dark
 colorscheme hybrid
 
 hi! link SpecialKey Error
-hi! link MatchParen Search
 syn keyword javascriptCommentTodo NOTE NB contained
 
 " Customise spell highlighting
@@ -274,6 +273,7 @@ if has("gui_running")
 
   " On Windows, must be executed before gui is shown (.gvimrc is too late).
   set guioptions=ce
+
   " Input font settings:
   "   --asterisk=height
   "   --i=serifs_round
