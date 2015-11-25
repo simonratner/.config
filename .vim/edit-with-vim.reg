@@ -5,5 +5,5 @@ Windows Registry Editor Version 5.00
 "Icon"="%ProgramFiles%\\Vim\\vim74\\gvim.exe,0"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\*\shell\editvim\command]
-@="c:\\lib\\git\\usr\\bin\\mintty -t \"%L\" -e vim -nc \"cd %%:p:h | map <C-z> <Nop>\" \"%L\""
+@="c:\\lib\\msys64\\usr\\bin\\mintty -t \"%L\" -e vim -nc \"cd %%:p:h | map <C-z> <Nop>\" \"%L\""
 
