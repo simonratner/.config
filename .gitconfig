@@ -15,8 +15,15 @@ diff = always
 ui = always
 
 [diff]
+tool = difftool
 pager = less -XFR
 algorithm = patience
+
+[difftool]
+prompt = false
+
+[difftool.difftool]
+cmd = difftool $LOCAL $REMOTE
 
 [push]
 default = simple

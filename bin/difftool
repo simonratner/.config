@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [[ $# -ne 2 ]]; then
+  echo "Usage: difftool file1 file2"
+  exit 1
+fi
+
+# Git removes the temp file as soon as this command completes.
+# We want to read this file with an external command, so make
+# a copy and delete it outselves later.
+COPY=$(mktemp -d)/$(basename $1)
+cp -a $1 $COPY
+
+mintty --hold error \
+       --size 175,40 \
+       --title "vimdiff $1 $2" \
+       --exec sh -c "vimdiff $COPY $2 ; rm $COPY"
