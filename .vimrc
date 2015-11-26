@@ -105,7 +105,6 @@ set laststatus=2
 set foldmethod=marker
 
 syn on                        " enable syntax coloring
-
 filetype on                   " enable filetype detection
 filetype indent on            " enable filetype-specific indenting
 filetype plugin on            " enable filetype-specific plugins
@@ -115,15 +114,14 @@ set list
 set listchars=tab:¬\ ,trail:·,nbsp:·,extends:»,precedes:«
 set fillchars+=vert:│
 
-" Customise syntax highlighting (hybrid)
+" Customise syntax highlighting (hybrid) {{{
 let g:hybrid_use_Xresources = 1  " use first 16 terminal colours
 set background=dark
 colorscheme hybrid
 
 hi! link SpecialKey Error
-syn keyword javascriptCommentTodo NOTE NB contained
-
-" Customise spell highlighting
+hi! link javascriptMethodAccessor Function
+hi! link javascriptMethodAccessorWords Function
 if version >= 700
   hi SpellBad   guisp=#cc0000 gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkRed term=underline cterm=underline
   hi SpellCap   guisp=#cf6a4c gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkYellow term=underline cterm=underline
@@ -131,7 +129,10 @@ if version >= 700
   hi SpellLocal guisp=#cc00cc gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkMagenta term=underline cterm=underline
 endif
 
-" Customise status line (lightline)
+syn keyword javascriptCommentTodo NOTE NB contained
+" }}}
+
+" Customise status line (lightline) {{{
 let g:lightline = {
   \ 'colorscheme': 'jellybeans',
   \ 'active': {
@@ -237,8 +238,9 @@ function! LightLineCtrlpFlags()
     return ''
   endif
 endfunction
+" }}}
 
-" CtrlP configuration
+" Customise ctrl-p {{{
 let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -co --exclude-standard']
 let g:ctrlp_status_func = {
   \ 'main': 'CtrlPStatusFunc_1',
@@ -257,6 +259,7 @@ endfunction
 function! CtrlPStatusFunc_2(str)
   return lightline#statusline(0)
 endfunction
+" }}}
 
 " Disable quote concealing in json files (vim-json)
 let g:vim_json_syntax_conceal = 0
