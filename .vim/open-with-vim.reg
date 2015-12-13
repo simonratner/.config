@@ -8,7 +8,7 @@ Windows Registry Editor Version 5.00
 "FriendlyAppName"="Vim"
 
 [HKEY_CLASSES_ROOT\Applications\vim.exe\shell\edit\command]
-@="c:\\lib\\msys64\\usr\\bin\\mintty -t \"%L\" -e vim -nc \"cd %%:p:h | map <C-z> <Nop>\" \"%L\""
+@="c:\\lib\\msys64\\usr\\bin\\mintty -o AppID=vim -t \"%L\" -e vim -nc \"cd %%:p:h | map <C-z> <Nop>\" \"%L\""
 
 [HKEY_CLASSES_ROOT\*\OpenWithList\vim.exe]
 
