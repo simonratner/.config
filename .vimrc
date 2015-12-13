@@ -78,7 +78,7 @@ au FocusLost    * :set nornu
 au FocusGained  * :set rnu
 
 set visualbell t_vb=
-set colorcolumn=+2
+set colorcolumn=+3
 set noerrorbells
 set nowrap
 set nohidden            " close the buffer when I close a tab
