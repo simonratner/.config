@@ -3,7 +3,7 @@ if net session >/dev/null 2>/dev/null; then
 else
   ADMIN=""
 fi
-PS1='\[\033]0;${ADMIN}${PWD//[^[:ascii:]]/?}\007\]' # window title
+PS1='\[\033]0;${ADMIN}${PWD/#$HOME/\~}\007\]' # window title
 PS1="$PS1"'\[\033[1;31m\]${ADMIN}'
 # git prompt {{{
 GIT_EXEC_PATH="$(git --exec-path 2>/dev/null)"
@@ -20,8 +20,31 @@ fi
 # }}}
 PS1="$PS1"'\[\033[0;34m\]\w>\[\033[0m\]\n$ '
 
+case $TERM in
+  xterm*|rxvt*)
+    # Show the currently running command in the terminal title:
+    # http://www.davidpashley.com/articles/xterm-titles-with-bash.html
+    show_command_in_title_bar()
+    {
+      case "$BASH_COMMAND" in
+        *\033]0*)
+          # The command is trying to set the title bar as well;
+          # this is most likely the execution of $PROMPT_COMMAND.
+          # Nested escapes confuse the terminal, so don't output them.
+          ;;
+        *)
+          cmd=${BASH_COMMAND#@(winpty|winpty.exe) }
+          cmd=${cmd%% *}
+          printf "\e]0;[%s] %s%s\a" "${cmd%.exe}" "${ADMIN}" "${PWD/#$HOME/\~}"
+          ;;
+      esac
+    }
+    trap show_command_in_title_bar DEBUG
+    ;;
+esac
+
 # load aliases, if any
 [ -f ~/.alias ] && source ~/.alias
 
-export PATH=$PATH:~/bin
+export PATH=~/bin:$PATH
 export PS1=$PS1
