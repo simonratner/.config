@@ -2,7 +2,9 @@ alias ls='ls -F -I[Nn][Tt][Uu][Ss][Ee][Rr]* --color=auto --show-control-chars'
 alias la='ls -a'
 alias ll='ls -l'
 
-alias gr='./gradlew --console=rich'
+alias gr='./gradlew.bat --console=rich'
+alias heroku='heroku.bat'
+alias pidcat='python $(which pidcat.py)'
 
 alias vi='vim'
 
