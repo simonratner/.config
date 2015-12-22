@@ -1,21 +1,22 @@
 alias ls='ls -F -I[Nn][Tt][Uu][Ss][Ee][Rr]* --color=auto --show-control-chars'
 alias la='ls -a'
 alias ll='ls -l'
-
-alias gr='./gradlew.bat --console=rich'
-alias heroku='heroku.bat'
-alias pidcat='python $(which pidcat.py)'
-
 alias vi='vim'
 
-case "$TERM" in
-xterm*)
-  # The following programs are known to require a Win32 Console
-  # for interactive usage, therefore let's launch them through
-  # winpty when run inside `mintty`.
-  for name in node python vagrant
-  do
-    alias $name="winpty $name.exe"
-  done
-  ;;
-esac
+if [ -n "$MSYSTEM" ]; then
+  alias gr='winpty ./gradlew.bat --console=rich'
+  alias heroku='heroku.bat'
+  alias pidcat='winpty $(which python.exe) $(which pidcat.py)'
+
+  case "$TERM" in
+  xterm*)
+    # The following programs are known to require a Win32 console
+    # for interactive usage, so launch them through `winpty` when
+    # running inside `mintty`.
+    for name in node python vagrant
+    do
+      alias $name="winpty $name.exe"
+    done
+    ;;
+  esac
+fi
