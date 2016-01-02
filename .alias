@@ -5,8 +5,8 @@ alias vi='vim'
 
 if [ -n "$MSYSTEM" ]; then
   alias gr='winpty ./gradlew.bat --console=rich'
-  alias heroku='heroku.bat'
-  alias pidcat='winpty $(which python.exe) $(which pidcat.py)'
+  alias heroku='winpty heroku.bat'
+  alias pidcat='python $(which pidcat.py)'
 
   case "$TERM" in
   xterm*)
