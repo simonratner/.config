@@ -1,7 +1,7 @@
 BoldAsFont=no
 Transparency=off
 Term=xterm-256color
-CopyOnSelect=no
+CopyOnSelect=yes
 CopyAsRTF=no
 Scrollbar=none
 PgUpDnScroll=no
