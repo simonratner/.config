@@ -38,6 +38,24 @@ if s:winconsole
   nnoremap <Esc>[64~ <C-E>
   nnoremap <Esc>[65~ <C-Y>
 endif
+" mintty: Mode-dependent cursor.
+let &t_ti.="\e[1 q"
+let &t_SR.="\e[3 q"
+let &t_SI.="\e[5 q"
+let &t_EI.="\e[1 q"
+let &t_te.="\e[0 q"
+" mintty: Avoid spurious CSI.
+let &t_ti.="\e[?7727h"
+let &t_te.="\e[?7727l"
+set iminsert=1
+lmap <Esc>O[ <Esc>
+nmap <Esc>O[ <Esc>
+omap <Esc>O[ <C-c>
+vmap <Esc>O[ <C-c>
+map! <Esc>O[ <C-c>
+" mintty: Mappings are not respected in paste mode, so switch back to
+" normal <Esc> handling to make sure we can exit insert/command modes.
+au OptionSet paste :if &paste | exe "silent !echo -ne \e[?7727l" | else | exe "silent !echo -ne \e[?7727h" | endif
 
 " No modelines for security reasons [http://www.guninski.com/vim1.html]
 set modelines=0
@@ -78,7 +96,9 @@ au FocusLost    * :set nornu
 au FocusGained  * :set rnu
 
 set visualbell t_vb=
-set colorcolumn=+3
+" Use system clipboard for yank/paste
+set clipboard=unnamed
+set colorcolumn=81
 set noerrorbells
 set nowrap
 set nohidden            " close the buffer when I close a tab
@@ -120,13 +140,14 @@ set background=dark
 colorscheme hybrid
 
 hi! link SpecialKey Error
-hi! link javascriptMethodAccessor Function
-hi! link javascriptMethodAccessorWords Function
+hi! link javascriptMethodAccessor StorageClass
+hi! link javascriptMethodAccessorWords StorageClass
 if version >= 700
-  hi SpellBad   guisp=#cc0000 gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkRed term=underline cterm=underline
-  hi SpellCap   guisp=#cf6a4c gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkYellow term=underline cterm=underline
-  hi SpellRare  guisp=#cc00cc gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkMagenta term=underline cterm=underline
-  hi SpellLocal guisp=#cc00cc gui=undercurl guifg=NONE guibg=NONE ctermfg=Black ctermbg=DarkMagenta term=underline cterm=underline
+  hi SpellBad   guisp=#cc0000 gui=undercurl guifg=NONE guibg=NONE ctermfg=Red ctermbg=NONE cterm=underline term=underline
+  hi SpellCap   guisp=#cf6a4c gui=undercurl guifg=NONE guibg=NONE ctermfg=Red ctermbg=NONE cterm=underline term=underline
+  hi SpellRare  guisp=#cc00cc gui=undercurl guifg=NONE guibg=NONE ctermfg=Magenta ctermbg=NONE cterm=underline term=underline
+  hi SpellLocal guisp=#cc00cc gui=undercurl guifg=NONE guibg=NONE ctermfg=Magenta ctermbg=NONE cterm=underline term=underline
+  hi Search     guisp=#fcdc00 gui=underline guifg=NONE guibg=NONE ctermfg=Yellow ctermbg=Black cterm=underline term=underline
 endif
 
 syn keyword javascriptCommentTodo NOTE NB contained
@@ -316,10 +337,16 @@ imap <S-Right> <Right>
 " to directory of current file - http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
+" don't use ex mode, use Q for macro recording
+nnoremap Q q
+nnoremap q <Nop>
 " yank to end of line
 map Y y$
-" correct type-o's on exit
+" correct typos on write and exit
 nmap q: :q
+nmap :Q :q
+nmap :W :w
+nmap :WQ :wq
 " toggle buffers
 nmap <leader><leader> :b#<cr>
 " toggle paste mode
@@ -348,7 +375,7 @@ map <F13> <C-Tab>
 map <F14> <C-S-Tab>
 map! <F13> <C-Tab>
 map! <F14> <C-S-Tab>
-" Switch tabs with ctrl-tab and ctrl-shift-tab like most browsers
+" Switch tabs with ctrl-tab and ctrl-shift-tab
 nmap <silent> <C-Tab> gt
 nmap <silent> <C-S-Tab> gT
 " NOTE: abandon insert mode by design
@@ -435,6 +462,8 @@ if has("autocmd")
   autocmd BufRead *.less set filetype=sass
   " When editing a file, always jump to the last cursor position
   autocmd BufReadPost * if line("'\"") | exe "'\"" | endif
+  " Use 4-space indentation for markdown
+  autocmd FileType markdown setlocal et ts=4 sw=4 sts=4
   " Use tabs for makefiles
   autocmd FileType make setlocal noet ts=2 sw=2 sts=2
   " Use tabs for go
