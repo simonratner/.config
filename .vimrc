@@ -151,6 +151,7 @@ if version >= 700
   hi Search     guisp=#fcdc00 gui=underline guifg=NONE guibg=NONE ctermfg=Yellow ctermbg=Black cterm=underline term=underline
 endif
 
+syn keyword javaTodo NOTE NB contained
 syn keyword javascriptCommentTodo NOTE NB contained
 " }}}
 
