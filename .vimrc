@@ -81,6 +81,7 @@ set ts=2
 set sw=2
 set sts=2
 set expandtab           " make sure that ^T, <<, >>, and the like use spaces
+set formatoptions=cjlq
 set cinoptions=l1,g0.5s,h0.5s,i2s,+2s,(0,W2s
 
 " Relative line numbers in normal mode
