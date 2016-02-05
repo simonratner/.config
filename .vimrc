@@ -346,9 +346,8 @@ nnoremap q <Nop>
 map Y y$
 " correct typos on write and exit
 nmap q: :q
-nmap :Q :q
-nmap :W :w
-nmap :WQ :wq
+" clear search
+nmap <leader>/ :noh<cr>
 " toggle buffers
 nmap <leader><leader> :b#<cr>
 " toggle paste mode
