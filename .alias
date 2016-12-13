@@ -4,7 +4,7 @@ alias ll='ls -l'
 alias vi='vim'
 
 if [ -n "$MSYSTEM" ]; then
-  alias gr='winpty ./gradlew.bat --console=rich'
+  alias gr='winpty ./gradlew.bat --console=plain'
   alias heroku='winpty heroku.bat'
   alias pidcat='python $(which pidcat.py)'
 
@@ -16,6 +16,13 @@ if [ -n "$MSYSTEM" ]; then
     for name in node python vagrant
     do
       alias $name="winpty $name.exe"
+    done
+    alias npm="winpty npm.cmd"
+    # The following ruby stripts must be run via the batch file,
+    # rather than the shell script which assumes a cygwin env.
+    for name in bundle bundler gem rake rackup
+    do
+      alias $name="$name.bat"
     done
     ;;
   esac

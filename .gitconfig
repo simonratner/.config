@@ -9,6 +9,7 @@ tree = log --graph --pretty=oneline --abbrev-commit --decorate
 editor = vim +1
 pager = less -XFR
 autocrlf = input
+longpaths = false
 
 [color]
 diff = always
