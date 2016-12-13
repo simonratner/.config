@@ -18,6 +18,15 @@ set encoding=utf-8
 let g:pathogen_disabled = ["vim-javascript", "vim-airline"]
 call pathogen#infect()
 
+" Wiki
+let g:vimwiki_list = [
+  \ { 'path': '$HOME/Google Drive/Wiki', 'syntax' : 'markdown', 'ext': '.md' }
+  \ ]
+let g:vimwiki_ext2syntax = {}
+augroup filetypedetect
+  au! BufRead,BufNewFile */Wiki/* set filetype=vimwiki
+augroup END
+
 " Windows terminal config.
 let s:winconsole = (has('win32') || has('win64')) && !has('gui_running')
 if s:winconsole
@@ -365,6 +374,13 @@ nmap <leader>T  :-1r! date "+\%Y-\%m-\%d \%T\%Z"<cr>
 " fuzzy find
 map <leader>f :CtrlP<cr>
 map <leader>F :CtrlPClearCache<cr>\|:CtrlP<cr>
+
+" highlight stack via hilinks
+let g:hilinks_fmtwidth = 30
+let g:hilinks_nobeval = 1
+" ugh!
+silent! unmap <leader>hlt
+map <silent> <leader>hl :call <SNR>34_HiLinkTrace(0)<CR>
 
 " Switch windows easily
 nmap <silent> <leader><Tab> <C-w><C-w>

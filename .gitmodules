@@ -64,3 +64,9 @@
 [submodule ".vim/bundle/vim-characterize"]
 	path = .vim/bundle/vim-characterize
 	url = https://github.com/tpope/vim-characterize.git
+[submodule ".vim/bundle/vimwiki"]
+	path = .vim/bundle/vimwiki
+	url = https://github.com/vimwiki/vimwiki.git
+[submodule ".vim/bundle/vim-hilinks"]
+	path = .vim/bundle/vim-hilinks
+	url = https://github.com/kergoth/vim-hilinks
