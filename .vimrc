@@ -158,10 +158,28 @@ if version >= 700
   hi SpellRare  guisp=#cc00cc gui=undercurl guifg=NONE guibg=NONE ctermfg=Magenta ctermbg=NONE cterm=underline term=underline
   hi SpellLocal guisp=#cc00cc gui=undercurl guifg=NONE guibg=NONE ctermfg=Magenta ctermbg=NONE cterm=underline term=underline
   hi Search     guisp=#fcdc00 gui=underline guifg=NONE guibg=NONE ctermfg=Yellow ctermbg=Black cterm=underline term=underline
+  hi IncSearch  guisp=NONE gui=NONE guifg=#000000 guibg=#fcdc00 ctermfg=Black ctermbg=Yellow cterm=NONE term=NONE
 endif
 
 syn keyword javaTodo NOTE NB contained
 syn keyword javascriptCommentTodo NOTE NB contained
+
+hi! Identifier  guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
+hi! Function    guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
+hi! Statement   guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
+hi! Operator    guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
+hi! PreProc     guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
+hi! Type        guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
+hi! Structure   guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
+hi! Special     guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
+hi! Constant    guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
+hi! String      guisp=NONE gui=NONE guifg=NONE guibg=#373b41 ctermfg=NONE ctermbg=0 cterm=NONE term=NONE
+hi! Todo        cterm=NONE ctermfg=7 ctermbg=0 guibg=#373b41
+hi! Error       cterm=NONE ctermbg=NONE guibg=NONE
+hi! link SpecialComment Comment
+" highlight help file links
+hi! link helpHyperTextEntry String
+hi! link helpHyperTextJump String
 " }}}
 
 " Customise status line (lightline) {{{
