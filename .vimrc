@@ -108,7 +108,7 @@ au FocusGained  * :set rnu
 set visualbell t_vb=
 " Use system clipboard for yank/paste
 set clipboard=unnamed
-set colorcolumn=81
+set colorcolumn=81,82,83
 set noerrorbells
 set nowrap
 set nohidden            " close the buffer when I close a tab
@@ -141,7 +141,7 @@ filetype plugin on            " enable filetype-specific plugins
 
 " Make it so that tabs and trailing spaces are always visible.
 set list
-set listchars=tab:¬\ ,trail:·,nbsp:·,extends:»,precedes:«
+set listchars=tab:⌐\ ,trail:·,nbsp:·,extends:»,precedes:«
 set fillchars+=vert:│
 
 " Customise syntax highlighting (hybrid) {{{
@@ -366,7 +366,8 @@ nmap <leader>w :set wrap!<cr>
 " toggle list mode
 nmap <leader>l :set list!<cr>
 " get rid of trailing whitespace
-map <leader>d  :%s/[ <Tab>]\+$//<cr>
+map <leader>d  :s/[ <Tab>]\+$//<cr>
+map <leader>D  :%s/[ <Tab>]\+$//<cr>
 " insert timestamp at current cursor position
 nmap <leader>t  :r! date "+\%Y-\%m-\%d \%T\%Z"<cr>
 nmap <leader>T  :-1r! date "+\%Y-\%m-\%d \%T\%Z"<cr>
