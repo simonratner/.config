@@ -27,7 +27,7 @@ import re
 import subprocess
 from subprocess import PIPE
 
-__version__ = '2.0.0'
+__version__ = '2.1.0'
 
 LOG_LEVELS = 'VDIWEF'
 LOG_LEVELS_MAP = dict([(LOG_LEVELS[i], i) for i in range(len(LOG_LEVELS))])
@@ -171,13 +171,14 @@ PID_START_DALVIK = re.compile(r'^E/dalvikvm\(\s*(\d+)\): >>>>> ([a-zA-Z0-9._:]+)
 PID_KILL  = re.compile(r'^Killing (\d+):([a-zA-Z0-9._:]+)/[^:]+: (.*)$')
 PID_LEAVE = re.compile(r'^No longer want ([a-zA-Z0-9._:]+) \(pid (\d+)\): .*$')
 PID_DEATH = re.compile(r'^Process ([a-zA-Z0-9._:]+) \(pid (\d+)\) has died.?$')
-LOG_LINE  = re.compile(r'^([A-Z])/(.+?)\( *(\d+)\): (.*?)$')
+# 03-17 11:34:34.015 ...
+LOG_LINE  = re.compile(r'^(\d\d-\d\d)\s+(\d\d:\d\d:\d\d.\d\d\d)\s+([A-Z])/(.+?)\( *(\d+)\): (.*?)$')
 BUG_LINE  = re.compile(r'.*nativeGetEnabledTags.*')
 BACKTRACE_LINE = re.compile(r'^#(.*?)pc\s(.*?)$')
 
 adb_command = base_adb_command[:]
 adb_command.append('logcat')
-adb_command.extend(['-v', 'brief'])
+adb_command.extend(['-v', 'time'])
 
 # Clear log before starting logcat
 if args.clear_logcat:
@@ -286,7 +287,7 @@ while adb.poll() is None:
   if log_line is None:
     continue
 
-  level, tag, owner, message = log_line.groups()
+  day, time, level, tag, owner, message = log_line.groups()
   tag = tag.strip()
   start = parse_start_proc(line)
   if start:
@@ -296,8 +297,8 @@ while adb.poll() is None:
 
       app_pid = line_pid
 
-      linebuf  = '\n'
-      linebuf += colorize(' ' * (header_size - 1), bg=WHITE)
+      linebuf  = '\n' + colorize(time[0:10], bg=WHITE, fg=BLACK)
+      linebuf += colorize(' ' * (header_size - 11), bg=WHITE)
       linebuf += indent_wrap(' Process %s created for %s\n' % (line_package, target))
       linebuf += colorize(' ' * (header_size - 1), bg=WHITE)
       linebuf += ' PID: %s   UID: %s   GIDs: %s' % (line_pid, line_uid, line_gids)
@@ -308,8 +309,8 @@ while adb.poll() is None:
   dead_pid, dead_pname = parse_death(tag, message)
   if dead_pid:
     pids.remove(dead_pid)
-    linebuf  = '\n'
-    linebuf += colorize(' ' * (header_size - 1), bg=RED)
+    linebuf  = '\n' + colorize(time[0:10], bg=RED, fg=BLACK)
+    linebuf += colorize(' ' * (header_size - 11), bg=RED)
     linebuf += ' Process %s (PID: %s) ended' % (dead_pname, dead_pid)
     linebuf += '\n'
     print(linebuf)
@@ -331,17 +332,18 @@ while adb.poll() is None:
   if args.tag and not tag_in_tags_regex(tag, args.tag):
     continue
 
-  linebuf = ''
+  linebuf = time[0:10] + ' '
 
-  # right-align tag title and allocate color if needed
-  if tag != last_tag or args.always_tags:
-    last_tag = tag
-    color = allocate_color(tag)
-    tag = tag[-args.tag_width:].rjust(args.tag_width)
-    linebuf += colorize(tag, fg=color)
-  else:
-    linebuf += ' ' * args.tag_width
-  linebuf += ' '
+  if args.tag_width > 0:
+    # right-align tag title and allocate color if needed
+    if tag != last_tag or args.always_tags:
+      last_tag = tag
+      color = allocate_color(tag)
+      tag = tag[-args.tag_width:].rjust(args.tag_width)
+      linebuf += colorize(tag, fg=color)
+    else:
+      linebuf += ' ' * args.tag_width
+    linebuf += ' '
 
   # write out level colored edge
   if level in TAGTYPES:
