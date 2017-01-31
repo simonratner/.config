@@ -4,7 +4,7 @@ alias ll='ls -l'
 alias vi='vim'
 
 if [ -n "$MSYSTEM" ]; then
-  alias gr='winpty ./gradlew.bat --console=plain'
+  alias gr='winpty gradlew.bat'
   alias heroku='winpty heroku.bat'
   alias pidcat='python $(which pidcat.py)'
 
