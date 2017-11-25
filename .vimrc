@@ -150,6 +150,16 @@ set background=dark
 colorscheme off
 
 hi! link SpecialKey Error
+hi! link Todo Special
+
+hi Folded guibg=#303030 ctermbg=236
+hi ColorColumn guibg=#303030 ctermbg=236
+hi Comment guifg=#545454 guibg=NONE ctermfg=240 ctermbg=NONE
+hi LineNr guifg=#545454 guibg=NONE ctermfg=240 ctermbg=NONE
+hi CursorLineNr guifg=#F3E430 guibg=NONE ctermfg=11 ctermbg=NONE
+hi String guibg=#303030 guifg=NONE ctermbg=236 ctermfg=NONE
+hi Visual guibg=#424242 guifg=#F1F1F1 ctermbg=8 ctermfg=15
+
 if version >= 700
   hi SpellBad   guisp=#cc0000 gui=undercurl guifg=NONE guibg=NONE ctermfg=Red ctermbg=NONE cterm=underline term=underline
   hi SpellCap   guisp=#cf6a4c gui=undercurl guifg=NONE guibg=NONE ctermfg=Red ctermbg=NONE cterm=underline term=underline
@@ -158,9 +168,6 @@ if version >= 700
   hi Search     guisp=#fcdc00 gui=underline guifg=NONE guibg=NONE ctermfg=Yellow ctermbg=Black cterm=underline term=underline
   hi IncSearch  guisp=NONE gui=NONE guifg=#000000 guibg=#fcdc00 ctermfg=Black ctermbg=Yellow cterm=NONE term=NONE
 endif
-
-syn keyword javaTodo NOTE NB contained
-syn keyword javascriptCommentTodo NOTE NB contained
 
 " highlight help file links
 hi! link helpHyperTextEntry String
