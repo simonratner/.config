@@ -1,9 +1,16 @@
 [alias]
-l = log --format='%C(yellow)%h%Creset %s %C(black bold)(%cr)%Creset' -10
-br = branch --list
+l = log --format='%C(auto,yellow nobold)%h%Creset %s %C(auto,black bold)(%cr)%Creset' -10
+b = branch --list
+d = diff
+ds = diff --staged
 st = status -sb
 snap = !git stash save "snapshot: $(date)" && git stash apply 'stash@{0}'
 tree = log --graph --pretty=oneline --abbrev-commit --decorate
+build-num = "!f() { \
+  commit=$(git rev-list HEAD | tail -n${1-+0} | head -n1); \
+  count=$(git rev-list --count $commit); \
+  git log --format='%C(auto,red bold)'$count' %C(auto,yellow nobold)%h%Creset %s %C(auto,black bold)(%cr)%Creset' -1 $commit; \
+}; f"
 
 [core]
 editor = vim +1
