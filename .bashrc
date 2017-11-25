@@ -69,7 +69,7 @@ if [ "$wsl" = yes ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-  PS1='\[\033[1;31m\]${wsl_admin:+[$wsl_admin] }\[\033[1;33m\]$(__git_ps1 "(%s) ")\[\033[0m\]${debian_chroot:+($debian_chroot)}\[\033[0;34m\]\w>\[\033[0m\]\n$ '
+  PS1='\[\033[1;31m\]${wsl_admin:+[$wsl_admin] }\[\033[0;33m\]$(__git_ps1 "(%s) ")\[\033[0m\]${debian_chroot:+($debian_chroot)}\[\033[0;34m\]\w>\[\033[0m\]\n$ '
 else
   PS1='${wsl_admin:+[$wsl_admin] }$(__git_ps1 "(%s) ")${debian_chroot:+($debian_chroot)}\w>\n$ '
 fi
