@@ -4,60 +4,18 @@
 [submodule ".vim/bundle/nerdtree"]
 	path = .vim/bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
-[submodule ".vim/bundle/jellybeans"]
-	path = .vim/bundle/jellybeans
-	url = https://github.com/nanotech/jellybeans.vim
-[submodule ".vim/bundle/vim-rails"]
-	path = .vim/bundle/vim-rails
-	url = git://github.com/tpope/vim-rails.git
-[submodule ".vim/bundle/vim-coffee-script"]
-	path = .vim/bundle/vim-coffee-script
-	url = https://github.com/kchmck/vim-coffee-script.git
 [submodule ".vim/bundle/ctrlp"]
 	path = .vim/bundle/ctrlp
 	url = https://github.com/ctrlpvim/ctrlp.vim.git
-[submodule ".vim/bundle/vim-airline"]
-	path = .vim/bundle/vim-airline
-	url = https://github.com/simonratner/vim-airline
 [submodule ".vim/bundle/vim-fugitive"]
 	path = .vim/bundle/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive
-[submodule ".vim/bundle/vim-node"]
-	path = .vim/bundle/vim-node
-	url = https://github.com/moll/vim-node
-[submodule ".vim/bundle/vim-json"]
-	path = .vim/bundle/vim-json
-	url = https://github.com/elzr/vim-json
-[submodule ".vim/bundle/vim-javascript"]
-	path = .vim/bundle/vim-javascript
-	url = https://github.com/pangloss/vim-javascript.git
-[submodule ".vim/bundle/vim-jst"]
-	path = .vim/bundle/vim-jst
-	url = https://github.com/briancollins/vim-jst.git
 [submodule ".vim/bundle/vim-localvimrc"]
 	path = .vim/bundle/vim-localvimrc
 	url = https://github.com/embear/vim-localvimrc.git
-[submodule ".vim/bundle/vim-mustache-handlebars"]
-	path = .vim/bundle/vim-mustache-handlebars
-	url = https://github.com/mustache/vim-mustache-handlebars.git
-[submodule ".vim/bundle/rust.vim"]
-	path = .vim/bundle/rust.vim
-	url = https://github.com/rust-lang/rust.vim.git
-[submodule ".vim/bundle/vim-hybrid"]
-	path = .vim/bundle/vim-hybrid
-	url = https://github.com/w0ng/vim-hybrid
-[submodule ".vim/bundle/yajs.vim"]
-	path = .vim/bundle/yajs.vim
-	url = https://github.com/othree/yajs.vim
 [submodule ".vim/bundle/lightline.vim"]
 	path = .vim/bundle/lightline.vim
 	url = https://github.com/itchyny/lightline.vim
-[submodule ".vim/bundle/vim-jsx"]
-	path = .vim/bundle/vim-jsx
-	url = https://github.com/mxw/vim-jsx.git
-[submodule ".vim/bundle/vim-js-indent"]
-	path = .vim/bundle/vim-js-indent
-	url = https://github.com/gavocanov/vim-js-indent.git
 [submodule ".vim/bundle/vim-characterize"]
 	path = .vim/bundle/vim-characterize
 	url = https://github.com/tpope/vim-characterize.git
@@ -67,3 +25,12 @@
 [submodule ".vim/bundle/vim-hilinks"]
 	path = .vim/bundle/vim-hilinks
 	url = https://github.com/kergoth/vim-hilinks
+[submodule ".vim/bundle/vim-polyglot"]
+	path = .vim/bundle/vim-polyglot
+	url = https://github.com/sheerun/vim-polyglot
+[submodule ".vim/bundle/vim-colors-off"]
+	path = .vim/bundle/vim-colors-off
+	url = https://github.com/pbrisbin/vim-colors-off.git
+[submodule ".vim/bundle/vim-node"]
+	path = .vim/bundle/vim-node
+	url = https://github.com/moll/vim-node.git

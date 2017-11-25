@@ -15,7 +15,7 @@ set encoding=utf-8
 "   (default) = "path\to\gvim.exe" --cmd "set rtp+=$USERPROFILE/.vim" "%L"
 
 " To disable a plugin, add it's bundle name to the following list
-let g:pathogen_disabled = ["vim-javascript", "vim-airline"]
+let g:pathogen_disabled = []
 call pathogen#infect()
 
 " Wiki
@@ -109,7 +109,7 @@ au FocusGained  * :set rnu
 set visualbell t_vb=
 " Use system clipboard for yank/paste
 set clipboard=unnamed
-set colorcolumn=81,82,83
+set colorcolumn=81
 set noerrorbells
 set nowrap
 set nohidden            " close the buffer when I close a tab
@@ -145,14 +145,11 @@ set list
 set listchars=tab:⌐\ ,trail:·,nbsp:·,extends:»,precedes:«
 set fillchars+=vert:│
 
-" Customise syntax highlighting (hybrid) {{{
-let g:hybrid_use_Xresources = 1  " use first 16 terminal colours
+" Customise syntax highlighting {{{
 set background=dark
-colorscheme hybrid
+colorscheme off
 
 hi! link SpecialKey Error
-hi! link javascriptMethodAccessor StorageClass
-hi! link javascriptMethodAccessorWords StorageClass
 if version >= 700
   hi SpellBad   guisp=#cc0000 gui=undercurl guifg=NONE guibg=NONE ctermfg=Red ctermbg=NONE cterm=underline term=underline
   hi SpellCap   guisp=#cf6a4c gui=undercurl guifg=NONE guibg=NONE ctermfg=Red ctermbg=NONE cterm=underline term=underline
@@ -165,19 +162,6 @@ endif
 syn keyword javaTodo NOTE NB contained
 syn keyword javascriptCommentTodo NOTE NB contained
 
-hi! Identifier  guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
-hi! Function    guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
-hi! Statement   guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
-hi! Operator    guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
-hi! PreProc     guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
-hi! Type        guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
-hi! Structure   guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
-hi! Special     guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
-hi! Constant    guisp=NONE gui=NONE guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE cterm=NONE term=NONE
-hi! String      guisp=NONE gui=NONE guifg=NONE guibg=#373b41 ctermfg=NONE ctermbg=0 cterm=NONE term=NONE
-hi! Todo        cterm=NONE ctermfg=7 ctermbg=0 guibg=#373b41
-hi! Error       cterm=NONE ctermbg=NONE guibg=NONE
-hi! link SpecialComment Comment
 " highlight help file links
 hi! link helpHyperTextEntry String
 hi! link helpHyperTextJump String
@@ -425,7 +409,7 @@ nmap <silent> <F2> gT
 imap <silent> <F3> <C-c>:tabnext<cr>
 imap <silent> <F2> <C-c>:tabprev<cr>
 
-" spelling
+" Spelling
 nmap <F7> :setlocal invspell<cr>
 imap <silent> <F7> <C-O>:silent setlocal invspell<cr>
 
@@ -439,14 +423,7 @@ function! s:DiffWithSaved()
 endfunction
 com! DiffSaved call s:DiffWithSaved()
 
-" ---------------------------------------------------------------------------
-" Settings for CommandT
-"
-let g:CommandTMatchWindowReverse=1
-
-" ---------------------------------------------------------------------------
 " Settings for NERDTree
-"
 map <silent> <F4> :NERDTreeToggle<cr>
 let NERDTreeDirArrows=0
 let NERDTreeMinimalUI=1
@@ -454,49 +431,10 @@ let NERDTreeQuitOnOpen=1
 let NERDTreeShowBookmarks=1
 let NERDTreeWinSize=40
 
-" ---------------------------------------------------------------------------
-" Settings for VimClojure
-"
-let vimclojure#HighlightBuiltins=1
-let vimclojure#ParenRainbow=1
-
-" ---------------------------------------------------------------------------
-"  Automagic Clojure folding on defn's and defmacro's
-"
-function! ClojureFoldLevel()
-  if getline(v:lnum) =~ '^\s*(def\(n\|macro\|method\|test\).*\s'
-    return ">1"
-  elseif getline(v:lnum) =~ '^\s*(ns\s'
-    return ">1"
-  elseif getline(v:lnum) =~ '^\s*$'
-    let my_cljnum = v:lnum
-    let my_cljmax = line("$")
-
-    while (1)
-      let my_cljnum = my_cljnum + 1
-      if my_cljnum > my_cljmax
-        return "<1"
-      endif
-
-      let my_cljdata = getline(my_cljnum)
-
-      " If we match an empty line, stop folding
-      if my_cljdata =~ '^\s*(def' || my_cljdata =~ '^$'
-        return "<1"
-      else
-        return "="
-      endif
-    endwhile
-  else
-    return "="
-  endif
-endfunction
-
-" Autoload commands:
+" Autoload commands
 if has("autocmd")
   autocmd BufRead *.as set filetype=actionscript
   autocmd BufRead *.mxml set filetype=mxml
-  autocmd BufRead *.less set filetype=sass
   " When editing a file, always jump to the last cursor position
   autocmd BufReadPost * if line("'\"") | exe "'\"" | endif
   " Use 4-space indentation for markdown
@@ -505,6 +443,4 @@ if has("autocmd")
   autocmd FileType make setlocal noet ts=2 sw=2 sts=2
   " Use tabs for go
   autocmd FileType go setlocal noet ts=2 sw=2 sts=2
-  " Fold clojure methods
-  autocmd FileType clojure setlocal foldexpr=ClojureFoldLevel() foldmethod=expr foldignore=;
 endif

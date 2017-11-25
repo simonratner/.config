@@ -14,3 +14,6 @@
 
 # Windows registry
 ntuser*
+
+# Config repo (avoid recursive mess)
+.config.git
