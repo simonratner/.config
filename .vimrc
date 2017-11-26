@@ -149,16 +149,19 @@ set fillchars+=vert:│
 set background=dark
 colorscheme off
 
-hi! link SpecialKey Error
-hi! link Todo Special
-
+" Non-sysntax elements
 hi Folded guibg=#303030 ctermbg=236
 hi ColorColumn guibg=#303030 ctermbg=236
-hi Comment guifg=#545454 guibg=NONE ctermfg=240 ctermbg=NONE
-hi LineNr guifg=#545454 guibg=NONE ctermfg=240 ctermbg=NONE
 hi CursorLineNr guifg=#F3E430 guibg=NONE ctermfg=11 ctermbg=NONE
-hi String guibg=#303030 guifg=NONE ctermbg=236 ctermfg=NONE
+hi LineNr guifg=#545454 guibg=NONE ctermfg=240 ctermbg=NONE
 hi Visual guibg=#424242 guifg=#F1F1F1 ctermbg=8 ctermfg=15
+
+" Sysntax elements
+hi Comment guifg=#545454 guibg=NONE ctermfg=240 ctermbg=NONE
+hi SpecialKey guifg=#E32791 guibg=NONE ctermfg=1 ctermbg=NONE
+hi String guibg=#303030 guifg=NONE ctermbg=236 ctermfg=NONE
+
+hi! link Todo Special
 
 if version >= 700
   hi SpellBad   guisp=#cc0000 gui=undercurl guifg=NONE guibg=NONE ctermfg=Red ctermbg=NONE cterm=underline term=underline
