@@ -24,8 +24,7 @@ ui = always
 
 [diff]
 tool = difftool
-pager = less -XFR
-algorithm = patience
+algorithm = histogram
 
 [difftool]
 prompt = false
