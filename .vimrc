@@ -149,14 +149,14 @@ set fillchars+=vert:│
 set background=dark
 colorscheme off
 
-" Non-sysntax elements
+" Non-syntax elements
 hi Folded guibg=#303030 ctermbg=236
 hi ColorColumn guibg=#303030 ctermbg=236
 hi CursorLineNr guifg=#F3E430 guibg=NONE ctermfg=11 ctermbg=NONE
 hi LineNr guifg=#545454 guibg=NONE ctermfg=240 ctermbg=NONE
 hi Visual guibg=#424242 guifg=#F1F1F1 ctermbg=8 ctermfg=15
 
-" Sysntax elements
+" Syntax elements
 hi Comment guifg=#545454 guibg=NONE ctermfg=240 ctermbg=NONE
 hi SpecialKey guifg=#E32791 guibg=NONE ctermfg=1 ctermbg=NONE
 hi String guibg=#303030 guifg=NONE ctermbg=236 ctermfg=NONE
