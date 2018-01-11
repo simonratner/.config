@@ -26,4 +26,6 @@ if [ -n "$MSYSTEM" ]; then
     done
     ;;
   esac
+else
+  alias gr='./gradlew'
 fi
