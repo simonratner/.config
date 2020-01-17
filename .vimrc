@@ -48,6 +48,15 @@ if s:winconsole
   nnoremap <Esc>[64~ <C-E>
   nnoremap <Esc>[65~ <C-Y>
 endif
+
+" Copy yanked text into system clipboard on WSL
+if system('uname -r') =~ "Microsoft"
+  augroup Yank
+    autocmd!
+    autocmd TextYankPost * :call system('clip.exe ',@")
+  augroup END
+endif
+
 " mintty: Mode-dependent cursor.
 let &t_ti.="\e[1 q"
 let &t_SR.="\e[3 q"
@@ -63,9 +72,6 @@ nmap <Esc>O[ <Esc>
 omap <Esc>O[ <C-c>
 vmap <Esc>O[ <C-c>
 map! <Esc>O[ <C-c>
-" mintty: Mappings are not respected in paste mode, so switch back to
-" normal <Esc> handling to make sure we can exit insert/command modes.
-au OptionSet paste :if &paste | exe "silent !echo -ne \e[?7727l" | else | exe "silent !echo -ne \e[?7727h" | endif
 
 " No modelines for security reasons [http://www.guninski.com/vim1.html]
 set modelines=0
@@ -110,6 +116,8 @@ set visualbell t_vb=
 " Use system clipboard for yank/paste
 set clipboard=unnamed
 set colorcolumn=89
+set cursorline
+set mouse=a
 set noerrorbells
 set nowrap
 set nohidden            " close the buffer when I close a tab
