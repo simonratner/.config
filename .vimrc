@@ -20,7 +20,7 @@ call pathogen#infect()
 
 " Wiki
 let g:vimwiki_list = [
-  \ { 'path': '$HOME/Google Drive/Wiki', 'syntax' : 'markdown', 'ext': '.md' }
+  \ { 'path': '/mnt/g/My Drive/Wiki', 'syntax' : 'markdown', 'ext': '.md' }
   \ ]
 let g:vimwiki_listsyms = ' ~~~X'
 let g:vimwiki_ext2syntax = {}
@@ -86,7 +86,7 @@ set updatetime=1000     " milliseconds before updating swapfile
 set suffixes=.bak,~,.o,.swp
 
 set autoindent smartindent    " sane indenting
-set tw=0                " disable text autowrap at 80 columns
+set tw=88
 set ts=2
 set sw=2
 set sts=2
@@ -109,7 +109,7 @@ au FocusGained  * :set rnu
 set visualbell t_vb=
 " Use system clipboard for yank/paste
 set clipboard=unnamed
-set colorcolumn=81
+set colorcolumn=89
 set noerrorbells
 set nowrap
 set nohidden            " close the buffer when I close a tab
