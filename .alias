@@ -3,6 +3,9 @@ alias la='ls -a'
 alias ll='ls -l'
 alias vi='vim'
 
+alias jqt="jq -r '(map(keys) | add | unique) as \$cols | map(. as \$row | \$cols | map(\$row[.])) as \$rows | \$cols, \$rows[] | @tsv'"
+alias jqc="jq -r '(map(keys) | add | unique) as \$cols | map(. as \$row | \$cols | map(\$row[.])) as \$rows | \$cols, \$rows[] | @csv'"
+
 if [ -n "$MSYSTEM" ]; then
   alias gr='winpty gradlew.bat'
   alias heroku='winpty heroku.bat'
