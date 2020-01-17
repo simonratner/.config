@@ -22,5 +22,4 @@ if [ -x "$uru" ]; then
   eval "$($uru admin install)"
 fi
 
-# set PATH so it includes user's private bin directories
-PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+source "$HOME/.config/broot/launcher/bash/br"
