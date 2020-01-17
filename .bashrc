@@ -123,7 +123,7 @@ fi
 
 # Bare git repo for storing config files.
 function config {
-  /usr/bin/git --git-dir=$HOME/.config.git --work-tree=$HOME "$@"
+  git --git-dir=$HOME/.config.git --work-tree=$HOME "$@"
 }
 
 # Highlight function.  Use like so:
