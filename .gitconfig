@@ -1,9 +1,10 @@
 [alias]
-l = log --format='%C(auto,yellow nobold)%h%Creset %s %C(auto,black bold)(%cr)%Creset' -10
+l = log --format='%C(auto,yellow nobold)%h%Creset %s %C(auto,black bold)(%cr)%Creset' -20
 b = branch --list
 d = diff
 ds = diff --staged
-st = status -sb
+s = status -sb
+sl = stash list --format='%C(auto,yellow nobold)%gd%Creset %gs %C(auto,black bold)(%cr)%Creset'
 snap = !git stash save "snapshot: $(date)" && git stash apply 'stash@{0}'
 tree = log --graph --pretty=oneline --abbrev-commit --decorate
 build-num = "!f() { \
