@@ -1,7 +1,7 @@
 #!/bin/bash
 
 workspace=$(pwd -P)
-if [[ $(uname -a) =~ Microsoft ]]; then
+if [[ $(uname -r) =~ Microsoft ]]; then
   workspace=${workspace/\/mnt\/c\//c:\/}
 fi
 
