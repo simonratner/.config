@@ -1,0 +1,13 @@
+#!/bin/bash
+
+workspace=$(pwd -P)
+if [[ $(uname -a) =~ Microsoft ]]; then
+  workspace=${workspace/\/mnt\/c\//c:\/}
+fi
+
+u=$(id -u)
+g=$(id -g)
+h=$(uname)
+
+set -x
+docker run -e NEWT_USER=$u -e NEWT_GROUP=$g -e NEWT_HOST=$h --rm --device=/dev/bus/usb --privileged -v "$workspace:/workspace" -w /workspace mynewt/newt:latest "$@"
