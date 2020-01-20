@@ -57,6 +57,19 @@ if system('uname -r') =~ "Microsoft"
   augroup END
 endif
 
+" Map a key in all modes
+function s:map_all(mapping) " {{{
+  exec 'map' a:mapping
+  exec 'map!' a:mapping
+endfunction " }}}
+
+" Map a key that intentionally escapes insert mode
+function s:map_force_normal(from, to) " {{{
+  exec 'nmap <silent>' a:from a:to
+  exec 'imap <silent>' a:from '<Esc>'.a:to
+endfunction " }}}
+
+" mintty keycodes {{{
 " mintty: Mode-dependent cursor.
 let &t_ti.="\e[1 q"
 let &t_SR.="\e[3 q"
@@ -66,12 +79,24 @@ let &t_te.="\e[0 q"
 " mintty: Avoid spurious CSI.
 let &t_ti.="\e[?7727h"
 let &t_te.="\e[?7727l"
-set iminsert=1
-lmap <Esc>O[ <Esc>
-nmap <Esc>O[ <Esc>
-omap <Esc>O[ <C-c>
-vmap <Esc>O[ <C-c>
-map! <Esc>O[ <C-c>
+map <Esc>O[ <Esc>
+imap <Esc>O[ <Esc>
+cmap <Esc>O[ <C-c>
+" mintty: Mappings are not respected in paste mode, so switch back to
+" normal <Esc> handling to make sure we can exit insert/command modes.
+au OptionSet paste :if &paste | exe "silent !echo -ne \e[?7727l" | else | exe "silent !echo -ne \e[?7727h" | endif
+" mintty: Map C-Tab/C-S-Tab key codes
+set <F13>=[9;5u
+set <F14>=[9;6u
+set <F15>=[48;5u " Ctrl,0
+set <F16>=[45;5u " Ctrl,-
+set <F17>=[61;5u " Ctrl,+
+call s:map_all('<F13> <C-Tab>')
+call s:map_all('<F14> <C-S-Tab>')
+call s:map_all('<F15> :silent !echo -ne "\e]7770;\e\\"<cr>')
+call s:map_all('<F16> :silent !echo -ne "\e]7770;-1\e\\"<cr>')
+call s:map_all('<F17> :silent !echo -ne "\e]7770;+1\e\\"<cr>')
+" }}} mintty keycodes
 
 " No modelines for security reasons [http://www.guninski.com/vim1.html]
 set modelines=0
@@ -343,7 +368,7 @@ if has("gui_running")
 end
 
 if !has('gui_running')
-  set ttimeoutlen=10
+  set ttimeoutlen=100
   augroup FastEscape
     autocmd!
     au InsertEnter * set timeoutlen=0
@@ -352,7 +377,7 @@ if !has('gui_running')
 endif
 
 " ---------------------------------------------------------------------------
-" Shorcuts
+" Shortcuts
 "
 
 " Avoid accidental scroll after shifted commands
@@ -407,25 +432,22 @@ map <silent> <leader>hl :call <SNR>34_HiLinkTrace(0)<CR>
 " Switch windows easily
 nmap <silent> <leader><Tab> <C-w><C-w>
 
-" Map mintty C-Tab/C-S-Tab key codes
-set <F13>=[1;5I
-set <F14>=[1;6I
-map <F13> <C-Tab>
-map <F14> <C-S-Tab>
-map! <F13> <C-Tab>
-map! <F14> <C-S-Tab>
-" Switch tabs with ctrl-tab and ctrl-shift-tab
-nmap <silent> <C-Tab> gt
-nmap <silent> <C-S-Tab> gT
-" NOTE: abandon insert mode by design
-imap <silent> <C-Tab> <C-c>:tabnext<cr>
-imap <silent> <C-S-Tab> <C-c>:tabprev<cr>
+" Cycle tabs with ctrl-tab and ctrl-shift-tab
+call s:map_force_normal('<C-Tab>', 'gt')
+call s:map_force_normal('<C-S-Tab>', 'gT')
 " C-tab does not work in putty so map F2,F3 as well
-nmap <silent> <F3> gt
-nmap <silent> <F2> gT
-" NOTE: abandon insert mode by design
-imap <silent> <F3> <C-c>:tabnext<cr>
-imap <silent> <F2> <C-c>:tabprev<cr>
+call s:map_force_normal('<F2>', 'gt')
+call s:map_force_normal('<F3>', 'gT')
+" Switch to a specific tab with number shortcut
+call s:map_force_normal('<C-1>', '1gt')
+call s:map_force_normal('<C-2>', '2gt')
+call s:map_force_normal('<C-3>', '3gt')
+call s:map_force_normal('<C-4>', '4gt')
+call s:map_force_normal('<C-5>', '5gt')
+call s:map_force_normal('<C-6>', '6gt')
+call s:map_force_normal('<C-7>', '7gt')
+call s:map_force_normal('<C-8>', '8gt')
+call s:map_force_normal('<C-9>', '9gt')
 
 " Spelling
 nmap <F7> :setlocal invspell<cr>
