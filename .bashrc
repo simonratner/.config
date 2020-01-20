@@ -73,7 +73,6 @@ if [ "$color_prompt" = yes ]; then
 else
   PS1='${wsl_admin:+[$wsl_admin] }$(__git_ps1 "(%s) ")${debian_chroot:+($debian_chroot)}\w>\n$ '
 fi
-unset color_prompt force_color_prompt
 
 # If this is an xterm, set the window title
 case "$TERM" in
@@ -100,31 +99,7 @@ case "$TERM" in
   *)
     ;;
 esac
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-  export LS_COLORS="$LS_COLORS:ow=1;33"
-  alias ls='ls --color=auto'
-  #alias dir='dir --color=auto'
-  #alias vdir='vdir --color=auto'
-
-  alias grep='grep --color=auto'
-  alias fgrep='fgrep --color=auto'
-  alias egrep='egrep --color=auto'
-fi
-
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+unset color_prompt force_color_prompt wsl wsl_admin
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -168,10 +143,17 @@ function highlight() {
   sed -u s"/$2/$fg_c\0$c_rs/g"
 }
 
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-source "$HOME/.config/broot/launcher/bash/br"
+# Install ruby runtime picker
+uru=$(which uru_rt)
+if [ -x "$uru" ]; then
+  eval "$($uru admin install)"
+fi
+
+# Install br shell function, if exists
+if [ -f "$HOME/.config/broot/launcher/bash/br" ]; then
+  source "$HOME/.config/broot/launcher/bash/br"
+fi

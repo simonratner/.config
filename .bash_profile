@@ -16,10 +16,12 @@ if [ -n "$BASH_VERSION" ]; then
   fi
 fi
 
-# install ruby runtime picker
-uru=$(which uru_rt)
-if [ -x "$uru" ]; then
-  eval "$($uru admin install)"
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+  PATH="$HOME/bin:$PATH"
 fi
 
-source "$HOME/.config/broot/launcher/bash/br"
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+  PATH="$HOME/.local/bin:$PATH"
+fi
