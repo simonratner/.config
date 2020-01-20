@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ ( $(uname -a) =~ Microsoft ) && ! ( -S /var/run/docker.sock ) ]]; then
+  echo "Docker relay socket does not exist, creating..." >&2
+  sudo -b socat UNIX-LISTEN:/var/run/docker.sock,fork,group=docker,umask=007 EXEC:"npiperelay.exe -ep -s //./pipe/docker_engine",nofork
+  sleep 1
+fi
+/usr/bin/docker "$@"
