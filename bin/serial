@@ -1,8 +1,12 @@
-#!/bin/sh
+#!/bin/sh -e
 
-if [ -z "$1" ]; then
-  echo "Usage: $0 <port>"
+usage() {
+  echo "Usage: $0 <port-num>" 1>&2
   exit 1
+}
+
+if [ -z "$1" -o "$1" = "-h" -o "$1" = "--help" ]; then
+  usage
 fi
 
 sudo chmod 666 /dev/ttyS$1
