@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/mnt/c/Lib/openocd-0.10.0-rtt/bin/openocd.exe "$@"
