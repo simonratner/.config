@@ -18,7 +18,7 @@ if [ ! -x "$SORT" ]; then
 fi
 
 adjust=${@/#/$DATEOPT}
-after=`$DATE ${adjust:=$DATEOPT_DEFAULT} "+%b %d %Y"`
+after=`$DATE "${adjust:=$DATEOPT_DEFAULT}" "+%b %d %Y"`
 git log --format="author %aE" --no-merges --numstat -C --after="$after" | \
     awk --posix "/^author/ {
         commit[i=\$2]+=1
