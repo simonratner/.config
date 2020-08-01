@@ -1,12 +1,17 @@
 if has('win32') || has('win64')
   let $HOME=$USERPROFILE
 endif
+
+" On Windows, force use of .viminfo filename instead of _viminfo.
+set viminfofile=$HOME/.viminfo
+
 " On Windows, vim defaults to $HOME/vimfiles, but .vim is just fine.
 set rtp^=$GOROOT/misc/vim
 set rtp^=$HOME/.vim
 set rtp+=$HOME/.vim/after
 set rtp-=$HOME/vimfiles
 set rtp-=$HOME/vimfiles/after
+
 set encoding=utf-8
 
 " Backups
@@ -19,7 +24,6 @@ set history=200
 set suffixes=.bak,~,.o,.swp
 set updatecount=40      " number of characters typed before updating swapfile
 set updatetime=1000     " milliseconds before updating swapfile
-set viminfo='100,<0,h,n$HOME/.viminfo   " force .viminfo name on win32
 
 " If Windows shell integration ("Edit with Vim") throws errors about
 " missing functions and plugins, change the following registry key:
