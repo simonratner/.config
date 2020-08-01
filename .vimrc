@@ -45,9 +45,8 @@ augroup filetypedetect
 augroup END
 
 if !has('gui_running')
-  let s:terminal = system('terminal -n')
-else
-  let s:terminal = ""
+  " Request terminal info; response is returned in v:termresponse
+  echo &t_RV
 endif
 
 " Map a key in all modes
@@ -63,14 +62,14 @@ function s:map_force_normal(from, to) " {{{
 endfunction " }}}
 
 " Windows terminal config {{{
-if s:terminal =~ "cmd"
+if &term == "win32"
   " Enable 256 colours.
   let &t_Co=256
 endif
 " }}}
 
 " Mintty terminal config {{{
-if s:terminal =~ "mintty"
+if v:termresponse =~ ">77;"
   " mintty: Mode-dependent cursor.
   let &t_ti.="\e[1 q"
   let &t_SR.="\e[3 q"
