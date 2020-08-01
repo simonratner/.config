@@ -100,7 +100,7 @@ endif
 " }}}
 
 " Copy yanked text into system clipboard on WSL
-if has('linux') && system('uname -r') =~ "Microsoft"
+if has('linux') && system('uname -r') =~ "[Mm]icrosoft"
   augroup Yank
     autocmd!
     autocmd TextYankPost * :call system('clip.exe ',@")

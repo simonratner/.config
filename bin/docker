@@ -1,6 +1,7 @@
 #!/bin/bash
 
-if [[ ( $(uname -r) =~ Microsoft ) && ! ( -S /var/run/docker.sock ) ]]; then
+# Only for WSL1
+if [[ ( $(uname -r) =~ ^4\.4\.0.*[Mm]icrosoft$ ) && ! ( -S /var/run/docker.sock ) ]]; then
   echo "Docker relay socket does not exist, creating..." >&2
   sudo -b socat UNIX-LISTEN:/var/run/docker.sock,fork,group=docker,umask=007 EXEC:"npiperelay.exe -ep -s //./pipe/docker_engine",nofork
   sleep 1
