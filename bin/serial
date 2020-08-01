@@ -11,7 +11,7 @@ fi
 
 sudo chmod 666 /dev/ttyS$1
 
-stty -F /dev/ttyS$1 -a
 stty -F /dev/ttyS$1 sane 115200
+stty -F /dev/ttyS$1 -a
 
 cu -l /dev/ttyS$1 -s 115200
