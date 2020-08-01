@@ -101,6 +101,10 @@ endif
 
 " Copy yanked text into system clipboard on WSL
 if has('linux') && system('uname -r') =~ "[Mm]icrosoft"
+  " Workaround for vim sometimes starting in replace mode when it receives an
+  " ambiguous utf8 character in response to cursor position request (WSL only)
+  " See: https://superuser.com/a/1525060
+  set t_u7=
   augroup Yank
     autocmd!
     autocmd TextYankPost * :call system('clip.exe ',@")
@@ -427,8 +431,8 @@ nmap <silent> <leader><Tab> <C-w><C-w>
 call s:map_force_normal('<C-Tab>', 'gt')
 call s:map_force_normal('<C-S-Tab>', 'gT')
 " C-tab does not work in putty so map F2,F3 as well
-call s:map_force_normal('<F2>', 'gt')
-call s:map_force_normal('<F3>', 'gT')
+call s:map_force_normal('<F2>', 'gT')
+call s:map_force_normal('<F3>', 'gt')
 " Switch to a specific tab with number shortcut
 call s:map_force_normal('<C-1>', '1gt')
 call s:map_force_normal('<C-2>', '2gt')
