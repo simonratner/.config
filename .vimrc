@@ -9,6 +9,18 @@ set rtp-=$HOME/vimfiles
 set rtp-=$HOME/vimfiles/after
 set encoding=utf-8
 
+" Backups
+set directory=$HOME/.vimbak
+set backup writebackup
+set backupdir=$HOME/.vimbak
+set backupskip=/tmp/*,/var/tmp/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
+
+set history=200
+set suffixes=.bak,~,.o,.swp
+set updatecount=40      " number of characters typed before updating swapfile
+set updatetime=1000     " milliseconds before updating swapfile
+set viminfo='100,<0,h,n$HOME/.viminfo   " force .viminfo name on win32
+
 " If Windows shell integration ("Edit with Vim") throws errors about
 " missing functions and plugins, change the following registry key:
 "   [HKEY_CLASSES_ROOT\*\shell\gvim\command]
@@ -28,33 +40,10 @@ augroup filetypedetect
   au! BufRead,BufNewFile */Wiki/* set filetype=vimwiki
 augroup END
 
-" Windows terminal config.
-let s:winconsole = (has('win32') || has('win64')) && !has('gui_running')
-if s:winconsole
-  set term=xterm
-  " Enable 256 colours.
-  let &t_Co=256
-  let &t_AB="\e[48;5;%dm"
-  let &t_AF="\e[0;38;5;%dm"
-  let &t_Sb="\e[48;5;%dm"
-  let &t_Sf="\e[0;38;5;%dm"
-  " Enable scroll wheel.
-  inoremap <Esc>[62~ <C-X><C-E>
-  inoremap <Esc>[63~ <C-X><C-Y>
-  inoremap <Esc>[64~ <C-X><C-E>
-  inoremap <Esc>[65~ <C-X><C-Y>
-  nnoremap <Esc>[62~ <C-E>
-  nnoremap <Esc>[63~ <C-Y>
-  nnoremap <Esc>[64~ <C-E>
-  nnoremap <Esc>[65~ <C-Y>
-endif
-
-" Copy yanked text into system clipboard on WSL
-if system('uname -r') =~ "Microsoft"
-  augroup Yank
-    autocmd!
-    autocmd TextYankPost * :call system('clip.exe ',@")
-  augroup END
+if !has('gui_running')
+  let s:terminal = system('terminal -n')
+else
+  let s:terminal = ""
 endif
 
 " Map a key in all modes
@@ -69,52 +58,56 @@ function s:map_force_normal(from, to) " {{{
   exec 'imap <silent>' a:from '<Esc>'.a:to
 endfunction " }}}
 
-" mintty keycodes {{{
-" mintty: Mode-dependent cursor.
-let &t_ti.="\e[1 q"
-let &t_SR.="\e[3 q"
-let &t_SI.="\e[5 q"
-let &t_EI.="\e[1 q"
-let &t_te.="\e[0 q"
-" mintty: Avoid spurious CSI.
-let &t_ti.="\e[?7727h"
-let &t_te.="\e[?7727l"
-map <Esc>O[ <Esc>
-imap <Esc>O[ <Esc>
-cmap <Esc>O[ <C-c>
-" mintty: Mappings are not respected in paste mode, so switch back to
-" normal <Esc> handling to make sure we can exit insert/command modes.
-au OptionSet paste :if &paste | exe "silent !echo -ne \e[?7727l" | else | exe "silent !echo -ne \e[?7727h" | endif
-" mintty: Map C-Tab/C-S-Tab key codes
-set <F13>=[9;5u
-set <F14>=[9;6u
-set <F15>=[48;5u " Ctrl,0
-set <F16>=[45;5u " Ctrl,-
-set <F17>=[61;5u " Ctrl,+
-call s:map_all('<F13> <C-Tab>')
-call s:map_all('<F14> <C-S-Tab>')
-call s:map_all('<F15> :silent !echo -ne "\e]7770;\e\\"<cr>')
-call s:map_all('<F16> :silent !echo -ne "\e]7770;-1\e\\"<cr>')
-call s:map_all('<F17> :silent !echo -ne "\e]7770;+1\e\\"<cr>')
-" }}} mintty keycodes
+" Windows terminal config {{{
+if s:terminal =~ "cmd"
+  " Enable 256 colours.
+  let &t_Co=256
+endif
+" }}}
+
+" Mintty terminal config {{{
+if s:terminal =~ "mintty"
+  " mintty: Mode-dependent cursor.
+  let &t_ti.="\e[1 q"
+  let &t_SR.="\e[3 q"
+  let &t_SI.="\e[5 q"
+  let &t_EI.="\e[1 q"
+  let &t_te.="\e[0 q"
+  " mintty: Avoid spurious CSI.
+  let &t_ti.="\e[?7727h"
+  let &t_te.="\e[?7727l"
+  map <Esc>O[ <Esc>
+  imap <Esc>O[ <Esc>
+  cmap <Esc>O[ <C-c>
+  " mintty: Mappings are not respected in paste mode, so switch back to
+  " normal <Esc> handling to make sure we can exit insert/command modes.
+  au OptionSet paste :if &paste | exe "silent !echo -ne \e[?7727l" | else | exe "silent !echo -ne \e[?7727h" | endif
+  " mintty: Map C-Tab/C-S-Tab key codes
+  set <F13>=[9;5u
+  set <F14>=[9;6u
+  set <F15>=[48;5u " Ctrl,0
+  set <F16>=[45;5u " Ctrl,-
+  set <F17>=[61;5u " Ctrl,+
+  call s:map_all('<F13> <C-Tab>')
+  call s:map_all('<F14> <C-S-Tab>')
+  call s:map_all('<F15> :silent !echo -ne "\e]7770;\e\\"<cr>')
+  call s:map_all('<F16> :silent !echo -ne "\e]7770;-1\e\\"<cr>')
+  call s:map_all('<F17> :silent !echo -ne "\e]7770;+1\e\\"<cr>')
+endif
+" }}}
+
+" Copy yanked text into system clipboard on WSL
+if has('linux') && system('uname -r') =~ "Microsoft"
+  augroup Yank
+    autocmd!
+    autocmd TextYankPost * :call system('clip.exe ',@")
+  augroup END
+endif
 
 " No modelines for security reasons [http://www.guninski.com/vim1.html]
 set modelines=0
 set nocompatible
 set secure              " don't allow FS modifications in CWD .vimrc/.exrc
-
-" Backups
-set directory=$HOME/.vimbak
-set backup writebackup
-set backupdir=$HOME/.vimbak
-set backupskip=/tmp/*,/var/tmp/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
-
-set history=200
-set viminfo='100,<0,h,n$HOME/.viminfo   " force .viminfo name on win32
-
-set updatecount=40      " number of characters typed before updating swapfile
-set updatetime=1000     " milliseconds before updating swapfile
-set suffixes=.bak,~,.o,.swp
 
 set autoindent smartindent    " sane indenting
 set tw=88
@@ -240,20 +233,15 @@ let g:lightline = {
   \   '\<C-s>': 'S',
   \   '?'     : ' '
   \ }}
-if s:winconsole
-  let g:lightline.separator = { 'left': '', 'right': '' }
-  let g:lightline.subseparator = { 'left': '│', 'right': '│' }
-else
-  let g:lightline.separator = { 'left': '', 'right': '' }
-  let g:lightline.subseparator = { 'left': '', 'right': '' }
-endif
+let g:lightline.separator = { 'left': '', 'right': '' }
+let g:lightline.subseparator = { 'left': '', 'right': '' }
 
 function! LightLineModified()
   return &ft =~ 'help\|vimfiler' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
 function! LightLineReadonly()
-  return &ft !~? 'help\|vimfiler' && &readonly ? (s:winconsole ? '[ro]' : '') : ''
+  return &ft !~? 'help\|vimfiler' && &readonly ? '' : ''
 endfunction
 
 function! LightLineFilename()
@@ -271,7 +259,7 @@ endfunction
 function! LightLineFugitive()
   if &ft !~? 'vimfiler' && exists('*fugitive#head')
     let _ = fugitive#head()
-    return strlen(_) ? (s:winconsole ? ' '._ : ' '._) : ''
+    return strlen(_) ? ' '._ : ''
   endif
   return ''
 endfunction
