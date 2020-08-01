@@ -46,7 +46,7 @@ augroup END
 
 if !has('gui_running')
   " Request terminal info; response is returned in v:termresponse
-  echo &t_RV
+  silent echo &t_RV
 endif
 
 " Map a key in all modes
@@ -87,7 +87,7 @@ if v:termresponse =~ ">77;"
   au OptionSet paste :if &paste | exe "silent !echo -ne \e[?7727l" | else | exe "silent !echo -ne \e[?7727h" | endif
   " mintty: Map C-Tab/C-S-Tab key codes
   set <F13>=[9;5u
-  set <F14>=[9;6u
+  set <F14>=[1;6Z
   set <F15>=[48;5u " Ctrl,0
   set <F16>=[45;5u " Ctrl,-
   set <F17>=[61;5u " Ctrl,+
