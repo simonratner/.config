@@ -363,7 +363,7 @@ if has("gui_running")
   "   --i=serifs_round
   "   --l=serifs_round
   "   --zero=slash
-  "   --lineHeight=1.4
+  "   --lineHeight=1.3
   set gfn=InputMono:h10
 end
 
