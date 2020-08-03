@@ -7,6 +7,11 @@ function config {
 }
 ```
 
+On Windows, execute the following inside `cmd.exe` instead:
+```
+doskey config=git --git-dir=%USERPROFILE%/.config.git --work-tree=%USERPROFILE% $*
+```
+
 Clone your config into a bare repository under `$HOME`:
 ```sh
 git clone --bare git@github.com:simonratner/.config.git
