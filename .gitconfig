@@ -35,6 +35,9 @@ prompt = false
 [difftool.difftool]
 cmd = difftool $LOCAL $REMOTE
 
+[pull]
+ff = only
+
 [push]
 default = simple
 
