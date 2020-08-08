@@ -159,6 +159,7 @@ set noshowmode
 set ruler
 set incsearch           " incremental search
 set hlsearch            " highlight previous search results
+set diffopt+=vertical   " always arrange diff windows vertically
 set backspace=indent,eol,start
 set matchpairs+=<:>               " add < and > to match pairs
 set whichwrap+=<,>,[,]            " cursor keys wrap too
