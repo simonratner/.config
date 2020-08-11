@@ -14,7 +14,7 @@
     // To learn more about global settings, visit https://aka.ms/terminal-global-settings
 
     // If enabled, selections are automatically copied to your clipboard.
-    "copyOnSelect": false,
+    "copyOnSelect": true,
 
     // If enabled, formatted data is also copied to your clipboard
     "copyFormatting": false,
@@ -33,7 +33,7 @@
             // Put settings here that you want to apply to all profiles.
 
             "colorScheme": "Custom",
-            "cursorShape": "emptyBox",
+            "cursorShape": "filledBox",
             "fontFace": "Input Mono",
             "fontSize": 10,
             "fontWeight": "light",
@@ -117,10 +117,10 @@
         // Press Ctrl+Shift+F to open the search box
         { "command": "find", "keys": "ctrl+shift+f" },
 
-        // Ctrl-T opens a new copy of the current tab
-        { "command": "duplicateTab", "keys": "ctrl+t" },
+        // Ctrl+Shift+T opens a new copy of the current tab
+        { "command": "duplicateTab", "keys": "ctrl+shift+t" },
 
-        // Ctrl-Space opens command palette
+        // Ctrl+Space opens command palette
         { "command": "commandPalette", "keys": "ctrl+space" },
 
         // Press Alt+Shift+D to open a new pane.
