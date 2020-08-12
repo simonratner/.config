@@ -57,27 +57,37 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 case $(uname -a) in
-  *Microsoft*) wsl=yes;;
+  *icrosoft*)
+    wsl=yes
+    if net.exe session >/dev/null 2>/dev/null; then
+      wsl_ps1="Administrator: "
+    else
+      wsl_ps1=""
+    fi
+    ;;
 esac
 
-if [ "$wsl" = yes ]; then
-  if net.exe session >/dev/null 2>/dev/null; then
-    wsl_admin="Admin"
-  else
-    wsl_admin=""
+function __aws_ps1() {
+  if [[ $AWS_VAULT ]] && [[ $AWS_SESSION_EXPIRATION ]]; then
+    local DIFF=$((($(date -d "$AWS_SESSION_EXPIRATION" +%s) - $(date +%s))))
+    if [[ "$DIFF" -le 0 ]]; then
+      printf "$1" "$AWS_VAULT expired"
+    else
+      printf "$1" "$AWS_VAULT $(($DIFF/60))m$(($DIFF%60))s"
+    fi
   fi
-fi
+}
 
 if [ "$color_prompt" = yes ]; then
-  PS1='\[\033[1;31m\]${wsl_admin:+[$wsl_admin] }\[\033[0;33m\]$(__git_ps1 "(%s) ")\[\033[0m\]${debian_chroot:+($debian_chroot)}\[\033[0;34m\]\w>\[\033[0m\]\n$ '
+  PS1="\[\033[0;31m\]${wsl_ps1}${debian_chroot:+($debian_chroot) }"'$(__aws_ps1 "(%s) ")\[\033[0;33m\]$(__git_ps1 "(%s) ")\[\033[0;34m\]\w>\[\033[0m\]\n$ '
 else
-  PS1='${wsl_admin:+[$wsl_admin] }$(__git_ps1 "(%s) ")${debian_chroot:+($debian_chroot)}\w>\n$ '
+  PS1="${wsl_ps1}${debian_chroot:+($debian_chroot)}"'$(__aws_ps1 "(%s) ")$(__git_ps1 "(%s) ")\w>\n$ '
 fi
 
 # If this is an xterm, set the window title
 case "$TERM" in
   xterm*|rxvt*)
-    PS1="\[\e]0;${wsl_admin:+[$wsl_admin] }${debian_chroot:+($debian_chroot)}\w\a\]$PS1"
+    PS1="\[\e]0;${wsl_ps1}${debian_chroot:+($debian_chroot)}\w\a\]$PS1"
     # Show the currently running command in the terminal title:
     # http://www.davidpashley.com/articles/xterm-titles-with-bash.html
     function show_command_in_title_bar {
@@ -99,7 +109,7 @@ case "$TERM" in
   *)
     ;;
 esac
-unset color_prompt force_color_prompt wsl wsl_admin
+unset color_prompt force_color_prompt wsl wsl_ps1
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
