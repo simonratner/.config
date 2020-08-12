@@ -8,6 +8,10 @@
 # for ssh logins, install and configure the libpam-umask package.
 umask 022
 
+if which keychain >/dev/null 2>&1; then
+  eval $(keychain --noask --timeout 5 -q -Q --eval --agents ssh id_rsa)
+fi
+
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
   # include .bashrc if it exists
