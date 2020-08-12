@@ -1,19 +1,20 @@
 # History and backups
 .bash_history
 .cache/
+.lesshst
 .viminfo
 .vimbak/
 .vim/.netrwhist
 
 # Keys
 .ssh/*
-!.ssh/*.pub
-!.ssh/config
-!.ssh/known_hosts
-!.ssh/authorized_keys
+
+# AWS Config
+.aws/*
+.awsvault/*
 
 # Windows registry
 ntuser*
 
-# Config repo (avoid recursive mess)
+# Config repo itself
 .config.git
