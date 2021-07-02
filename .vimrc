@@ -36,9 +36,10 @@ call pathogen#infect()
 
 " Wiki
 let g:vimwiki_list = [
-  \ { 'path': '/mnt/g/My Drive/Wiki', 'syntax' : 'markdown', 'ext': '.md' }
+  \ { 'path': '~/User/Documents/Notes', 'syntax' : 'markdown', 'ext': '.md' }
   \ ]
-let g:vimwiki_listsyms = ' ~~~X'
+let g:vimwiki_listsyms = ' .x'
+let g:vimwiki_listsym_rejected = '-'
 let g:vimwiki_ext2syntax = {}
 augroup filetypedetect
   au! BufRead,BufNewFile */Wiki/* set filetype=vimwiki
