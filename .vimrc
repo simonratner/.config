@@ -121,7 +121,7 @@ set nocompatible
 set secure              " don't allow FS modifications in CWD .vimrc/.exrc
 
 set autoindent smartindent    " sane indenting
-set tw=88
+set tw=98
 set ts=2
 set sw=2
 set sts=2
@@ -144,7 +144,7 @@ au FocusGained  * :set rnu
 set visualbell t_vb=
 " Use system clipboard for yank/paste
 set clipboard=unnamed
-set colorcolumn=89
+set colorcolumn=89,99
 set cursorline
 set mouse=a
 set noerrorbells
@@ -432,7 +432,7 @@ map <silent> <leader>hl :call <SNR>34_HiLinkTrace(0)<CR>
 " Switch windows easily
 nmap <silent> <leader><Tab> <C-w><C-w>
 
-" Cycle tabs with ctrl-tab and ctrl-shift-tab
+" Cycle tabs with ctrl-tab and ctrl-shift-tab (gvim only)
 call s:map_force_normal('<C-Tab>', 'gt')
 call s:map_force_normal('<C-S-Tab>', 'gT')
 " C-tab does not work in putty so map F2,F3 as well
