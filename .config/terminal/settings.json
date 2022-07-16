@@ -21,6 +21,7 @@
 
     "theme": "dark",
     "tabWidthMode": "titleLength",
+    "tabSwitcherMode": "disabled",
 
     // A profile specifies a command to execute paired with information about how it should look and feel.
     // Each one of them will appear in the 'New Tab' dropdown,
@@ -31,6 +32,9 @@
         "defaults":
         {
             // Put settings here that you want to apply to all profiles.
+
+	    // Disable bell
+	    "bellStyle": "none",
 
             "colorScheme": "Custom",
             "cursorShape": "filledBox",
@@ -55,6 +59,20 @@
                 "name": "Ubuntu-18.04",
                 "source": "Windows.Terminal.Wsl",
                 "startingDirectory": "//wsl$/Ubuntu/home/%USERNAME%"
+            },
+            {
+                "guid": "{61c54bbd-c003-5271-96e7-009a87fa45cf}",
+                "hidden": false,
+                "name": "COM3",
+                "commandline": "wsl -d Ubuntu minicom -D /dev/ttyS3", 
+                "startingDirectory": "%USERPROFILE%",
+            },
+            {
+                "guid": "{61c54bbd-c004-5271-96e7-009a87fa45cf}",
+                "hidden": false,
+                "name": "COM4",
+                "commandline": "wsl -d Ubuntu minicom -D /dev/ttyS4", 
+                "startingDirectory": "%USERPROFILE%",
             },
             {
                 // Make changes here to the cmd.exe profile.
@@ -117,16 +135,24 @@
         // Press Ctrl+Shift+F to open the search box
         { "command": "find", "keys": "ctrl+shift+f" },
 
-        // Ctrl+Shift+T opens a new copy of the current tab
-        { "command": "duplicateTab", "keys": "ctrl+shift+t" },
+        // Rebind dropdown menu to "menu" key
+        { "command": "openNewTabDropdown", "keys": "menu" },
 
         // Ctrl+Space opens command palette
         { "command": "commandPalette", "keys": "ctrl+space" },
+        { "command": "commandPalette", "keys": "ctrl+shift+space" },
 
-        // Press Alt+Shift+D to open a new pane.
+        // Ctrl+` opens tab list
+        { "command": "tabSearch", "keys": "ctrl+`" },
+
+        { "command": "scrollUpPage", "keys": "shift+pgup" },
+        { "command": "scrollDownPage", "keys": "shift+pgdn" },
+
+        // Press Ctrl+Shift+S to open a new pane.
         // - "split": "auto" makes this pane open in the direction that provides the most surface area.
         // - "splitMode": "duplicate" makes the new pane use the focused pane's profile.
         // To learn more about panes, visit https://aka.ms/terminal-panes
-        { "command": { "action": "splitPane", "split": "auto", "splitMode": "duplicate" }, "keys": "alt+shift+d" }
+        { "command": { "action": "splitPane", "split": "auto", "splitMode": "duplicate" }, "keys": "ctrl+shift+s" },
+        { "command": "closePane", "keys": "ctrl+shift+w" }
     ]
 }
