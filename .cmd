@@ -14,9 +14,13 @@ doskey cd~=cd %USERPROFILE%
 doskey cd..=cd ..
 doskey cd...=cd ../..
 doskey cd....=cd ../../..
-doskey ll=ls -l $*
 doskey la=ls -la $*
+doskey ll=ls -l $*
+doskey gri=grep --color=auto -ri $*
+doskey grep=grep --color=auto $*
 doskey config=git --git-dir=%USERPROFILE%/.config.git --work-tree=%USERPROFILE% $*
+doskey vi=vim $*
+doskey vimdiff=vim -d $*
 
 rem Requires ansicon or a terminal that supports ansi escapes.
 prompt $E[0;34m$P$+$G$E[1;37m$S$_$$$S
