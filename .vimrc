@@ -15,13 +15,19 @@ set rtp-=$HOME/vimfiles/after
 set encoding=utf-8
 
 " Backups
-set directory=$HOME/.vimbak
-set backup writebackup
-set backupdir=$HOME/.vimbak
+set directory=$HOME/.vimbak//
+set backupdir=$HOME/.vimbak//
 set backupskip=/tmp/*,/var/tmp/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
+set backup writebackup
+
+" Rotate backup suffix on every write
+fun! InitBackupSuffix()
+  let &backupext=strftime("~{%Y%m%dT%H%M}")
+endfun
+autocmd BufWritePre * call InitBackupSuffix()
 
 set history=200
-set suffixes=.bak,~,.o,.swp
+set suffixes=.bak,~,.o,.obj,.swp
 set updatecount=40      " number of characters typed before updating swapfile
 set updatetime=1000     " milliseconds before updating swapfile
 
@@ -31,7 +37,7 @@ set updatetime=1000     " milliseconds before updating swapfile
 "   (default) = "path\to\gvim.exe" --cmd "set rtp+=$USERPROFILE/.vim" "%L"
 
 " To disable a plugin, add it's bundle name to the following list
-let g:pathogen_disabled = []
+let g:pathogen_disabled = ['vimwiki']
 call pathogen#infect()
 
 " Wiki
