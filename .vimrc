@@ -276,8 +276,8 @@ function! LightLineFilename()
 endfunction
 
 function! LightLineFugitive()
-  if &ft !~? 'vimfiler' && exists('*fugitive#head')
-    let _ = fugitive#head()
+  if &ft !~? 'vimfiler' && exists('*FugitiveHead')
+    let _ = FugitiveHead()
     return strlen(_) ? ' '._ : ''
   endif
   return ''
