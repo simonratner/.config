@@ -1,7 +1,10 @@
+// Hard-link this file with expected Terminal settings file location. For example:
+//     ~\AppData\Local\Packages\Microsoft.WindowsTerminal...\LocalState>
+//     del settings.json & mklink /H settings.json %USERPROFILE%\.config\terminal\settings.json
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
+    "actions":
     [
         {
             "command": "tabSearch",
@@ -44,21 +47,21 @@
             "keys": "ctrl+pgup"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "commandPalette"
             },
             "keys": "ctrl+space"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "commandPalette"
             },
             "keys": "ctrl+shift+space"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "splitPane",
                 "split": "auto",
@@ -70,15 +73,15 @@
     "copyFormatting": "none",
     "copyOnSelect": true,
     "defaultProfile": "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
-    "profiles": 
+    "profiles":
     {
-        "defaults": 
+        "defaults":
         {
             "antialiasingMode": "cleartype",
             "bellStyle": "none",
             "colorScheme": "Custom",
             "cursorShape": "filledBox",
-            "font": 
+            "font":
             {
                 "face": "Input Mono",
                 "size": 10,
@@ -86,7 +89,7 @@
             },
             "padding": "0"
         },
-        "list": 
+        "list":
         [
             {
                 "guid": "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
@@ -148,7 +151,7 @@
             }
         ]
     },
-    "schemes": 
+    "schemes":
     [
         {
             "background": "#0C0C0C",
