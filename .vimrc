@@ -442,7 +442,6 @@ nmap <silent> <leader><Tab> <C-w><C-w>
 " Cycle tabs with ctrl-tab and ctrl-shift-tab (gvim only)
 call s:map_force_normal('<C-Tab>', 'gt')
 call s:map_force_normal('<C-S-Tab>', 'gT')
-" C-tab does not work in putty so map F2,F3 as well
 call s:map_force_normal('<F2>', 'gT')
 call s:map_force_normal('<F3>', 'gt')
 " Switch to a specific tab with number shortcut
