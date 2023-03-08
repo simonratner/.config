@@ -7,7 +7,7 @@ ds = diff --staged
 l = log --format='%C(auto,yellow nobold)%h%Creset %s %C(auto,black bold)(%cr)%Creset' -20
 s = status -sb
 sls = stash list --format='%C(auto,yellow nobold)%gd%Creset %gs %C(auto,black bold)(%cr)%Creset'
-snap = !git stash save "snapshot: $(date)" && git stash apply 'stash@{0}'
+snap = !git stash push -m "snapshot: $(date)" && git stash apply 'stash@{0}'
 tree = log --graph --pretty=oneline --abbrev-commit --decorate
 buildnum = "!f() { \
   commit=$(git rev-list HEAD | tail -n${1-+0} | head -n1); \
