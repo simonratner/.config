@@ -26,14 +26,14 @@ diff = always
 ui = always
 
 [diff]
-tool = difftool
+tool = vimdiff
 algorithm = histogram
 
 [difftool]
 prompt = false
 
-[difftool.difftool]
-cmd = difftool $LOCAL $REMOTE
+[difftool.vimdiff]
+cmd = vimdiff $LOCAL $REMOTE
 
 [pull]
 ff = only
